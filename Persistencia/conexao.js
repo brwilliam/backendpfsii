@@ -9,7 +9,7 @@ export default async function conectar(){
             host: '129.146.68.51',
             user: 'aluno6-pfsii', //jamais faça isso
             password:'aluno6-pfsii',  //never, nunca, jamais
-            database: 'backendaluno6-pfsii',
+            database: 'backendaluno6pfsii',
             waitForConnections: true,
             connectionLimit: 10,
             maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
