@@ -1,4 +1,4 @@
-import CategoriaDAO from "../Persistencia/categoriaDAO.js";
+import CategoriaDAO from "../Persistencia/restauranteDAO.js";
 //não esqueça do .js no final da importação
 
 export default class Categoria {

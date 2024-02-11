@@ -1,4 +1,4 @@
-import Categoria from "../Modelo/categoria.js";
+import Categoria from "../Modelo/restaurante.js";
 import conectar from "./conexao.js";
 //DAO = Data Access Object -> Objeto de acesso aos dados
 export default class CategoriaDAO{
