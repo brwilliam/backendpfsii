@@ -1,79 +1,72 @@
-import PedidoDAO from "../Persistencia/pedidoDAO";
+import PedidoDAO from "../Persistencia/pedidoDAO.js";
+import Restaurante from "./Restaurante.js"; // Certifique-se de usar a extensão correta do arquivo
 
-export default class Pedido{
-    #IDPedido;
-    #DataPedido;
-    #ValorTotal;
-    #restaurante; //é um objeto do tipo restaurante
+export default class Pedido {
+  #IDPedido;
+  #DataPedido;
+  #ValorTotal;
+  #restaurante; // é um objeto do tipo Restaurante
 
-    constructor(IDPedido=0,DataPedido="", ValorTotal=0, restaurante={}
-                ){
-        this.#IDPedido=IDPedido;
-        this.#DataPedido=DataPedido;
-        this.#ValorTotal=ValorTotal;
-        this.#restaurante=restaurante;
-    }
+  constructor(
+    DataPedido = "",
+    ValorTotal = 0,
+    restaurante = new Restaurante()
+  ) {
+    this.#IDPedido = 0; // O ID será gerado automaticamente pelo banco de dados
+    this.#DataPedido = DataPedido;
+    this.#ValorTotal = ValorTotal;
+    this.#restaurante = restaurante;
+  }
 
-    get IDPedido(){
-        return this.#IDPedido;
-    }
-    set IDPedido(novoCodigo){
-        this.#IDPedido = novoCodigo;
-    }
+  get IDPedido() {
+    return this.#IDPedido;
+  }
 
-    get DataPedido(){
-        return this.#DataPedido;
-    }
+  set IDPedido(novoIDPedido) {
+    this.#IDPedido = novoIDPedido;
+  }
 
-    set DataPedido(novaDesc){
-        this.#DataPedido=novaDesc;
-    }
+  get DataPedido() {
+    return this.#DataPedido;
+  }
 
-    get ValorTotal(){
-        return this.#ValorTotal;
-    }
+  set DataPedido(novaDataPedido) {
+    this.#DataPedido = novaDataPedido;
+  }
 
-    set ValorTotal(novoPreco){
-        this.#ValorTotal = novoPreco
-    }
+  get ValorTotal() {
+    return this.#ValorTotal;
+  }
 
-    get restaurante(){
-        return this.#restaurante;
-    }
+  set ValorTotal(novoValorTotal) {
+    this.#ValorTotal = novoValorTotal;
+  }
 
-    set restaurante(novoRest){
-        this.#restaurante = novoRest;
-    }
+  get restaurante() {
+    return this.#restaurante;
+  }
 
-    //override do método toJSON
-    toJSON(){
-        return {
-            IDPedido:this.#IDPedido,
-            DataPedido:this.#DataPedido,
-            ValorTotal:this.#ValorTotal,
-            restaurante:this.#restaurante
-        }
-    }
+  set restaurante(novoRestaurante) {
+    this.#restaurante = novoRestaurante;
+  }
 
-     //camada de modelo acessa a camada de persistencia
-     async gravar(){
-        const pedDAO = new PedidoDAO();
-        await pedDAO.gravar(this);
-     }
- 
-     async excluir(){
-        const pedDAO = new PedidoDAO();
-        await pedDAO.excluir(this);
-     }
- 
-     async alterar(){
-        const pedDAO = new PedidoDAO();
-        await pedDAO.atualizar(this);
-     }
- 
-     async consultar(termo){
-        const pedDAO = new PedidoDAO();
-        return await pedDAO.consultar(termo);
-     }
+  async gravar() {
+    const pedDAO = new PedidoDAO();
+    await pedDAO.gravar(this);
+  }
 
+  async excluir() {
+    const pedDAO = new PedidoDAO();
+    await pedDAO.excluir(this);
+  }
+
+  async alterar() {
+    const pedDAO = new PedidoDAO();
+    await pedDAO.atualizar(this);
+  }
+
+  async consultar(termo) {
+    const pedDAO = new PedidoDAO();
+    return await pedDAO.consultar(termo);
+  }
 }

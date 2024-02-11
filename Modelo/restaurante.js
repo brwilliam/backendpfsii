@@ -1,62 +1,76 @@
-import CategoriaDAO from "../Persistencia/restauranteDAO.js";
-//não esqueça do .js no final da importação
+import PedidoDAO from "../Persistencia/pedidoDAO.js";
 
-export default class Categoria {
-    //definição dos atributos privados
-    #codigo;
-    #descricao;
+export default class Restaurante {
+  // Definição dos atributos privados
+  #IDRestaurante;
+  #NomeRestaurante;
+  #Endereco;
+  #Telefone;
 
-    constructor(codigo=0, descricao=''){
-        this.#codigo=codigo;
-        this.#descricao=descricao;
-    }
+  constructor(
+    IDRestaurante = 0,
+    NomeRestaurante = "",
+    Endereco = "",
+    Telefone = ""
+  ) {
+    this.#IDRestaurante = IDRestaurante;
+    this.#NomeRestaurante = NomeRestaurante;
+    this.#Endereco = Endereco;
+    this.#Telefone = Telefone;
+  }
 
-    //métodos de acesso públicos
+  // Métodos de acesso públicos
 
-    get codigo(){
-        return this.#codigo;
-    }
+  get IDRestaurante() {
+    return this.#IDRestaurante;
+  }
 
-    set codigo(novoCodigo){
-        this.#codigo = novoCodigo;
-    }
+  set IDRestaurante(novoID) {
+    this.#IDRestaurante = novoID;
+  }
 
-    get descricao(){
-        return this.#descricao;
-    }
+  get NomeRestaurante() {
+    return this.#NomeRestaurante;
+  }
 
-    set descricao(novaDesc){
-        this.#descricao = novaDesc;
-    }
+  set NomeRestaurante(novoNome) {
+    this.#NomeRestaurante = novoNome;
+  }
 
-    //override do método toJSON
-    toJSON()     
-    {
-        return {
-            codigo:this.#codigo,
-            descricao:this.#descricao
-        }
-    }
+  get Endereco() {
+    return this.#Endereco;
+  }
 
-    //camada de modelo acessa a camada de persistencia
-    async gravar(){
-        const catDAO = new CategoriaDAO();
-        await catDAO.gravar(this);
-    }
+  set Endereco(novoEndereco) {
+    this.#Endereco = novoEndereco;
+  }
 
-    async excluir(){
-        const catDAO = new CategoriaDAO();
-        await catDAO.excluir(this);
-    }
+  get Telefone() {
+    return this.#Telefone;
+  }
 
-    async atualizar(){
-        const catDAO = new CategoriaDAO();
-        await catDAO.atualizar(this);
+  set Telefone(novoTelefone) {
+    this.#Telefone = novoTelefone;
+  }
 
-    }
+  // Camada de modelo acessa a camada de persistência
+  async gravar() {
+    const pedDAO = new PedidoDAO();
+    await pedDAO.gravar(this);
+  }
 
-    async consultar(parametro){
-        const catDAO = new CategoriaDAO();
-        return await catDAO.consultar(parametro);
-    }
+  async excluir() {
+    const pedDAO = new PedidoDAO();
+    await pedDAO.excluir(this);
+  }
+
+  async atualizar() {
+    const pedDAO = new PedidoDAO();
+    await pedDAO.atualizar(this);
+  }
+
+  async consultar(parametro) {
+    const pedDAO = new PedidoDAO();
+    return await pedDAO.consultar(parametro);
+  }
 }

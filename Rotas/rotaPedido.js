@@ -1,15 +1,15 @@
 import { Router } from "express";
-import ProdutoCtrl from "../Controle/produtoCtrl.js";
+import PedidoCtrl from "../Controle/pedidoCtrl.js";
 
-const prodCtrl = new ProdutoCtrl();
-const rotaProduto = new Router();
+const pedidoCtrl = new PedidoCtrl();
+const rotaPedido = new Router();
 
-rotaProduto
-.get('/', prodCtrl.consultar)
-.get('/:termo', prodCtrl.consultar)
-.post('/', prodCtrl.gravar)
-.patch('/', prodCtrl.atualizar)
-.put('/', prodCtrl.atualizar)
-.delete('/', prodCtrl.excluir);
+rotaPedido
+  .get("/", pedidoCtrl.consultar)
+  .get("/:termo", pedidoCtrl.consultar)
+  .post("/", pedidoCtrl.gravar)
+  .patch("/", pedidoCtrl.atualizar)
+  .put("/", pedidoCtrl.atualizar)
+  .delete("/", pedidoCtrl.excluir);
 
-export default rotaProduto;
+export default rotaPedido;
