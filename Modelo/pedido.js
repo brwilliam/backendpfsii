@@ -5,12 +5,12 @@ export default class Pedido {
   #IDPedido;
   #DataPedido;
   #ValorTotal;
-  #restaurante; // é um objeto do tipo Restaurante
+  #restaurante; // o pedido pertence ao restaurante
 
   constructor(
     DataPedido = "",
     ValorTotal = 0,
-    restaurante = new Restaurante()
+    restaurante = {}
   ) {
     this.#IDPedido = 0; // O ID será gerado automaticamente pelo banco de dados
     this.#DataPedido = DataPedido;

@@ -1,4 +1,4 @@
-import Pedido from "../Modelo/Pedido.js";
+import Pedido from "../Modelo/pedido.js";
 import Restaurante from "../Modelo/Restaurante.js";
 import conectar from "./conexao.js";
 
@@ -53,19 +53,46 @@ export default class PedidoDAO {
 
     const conexao = await conectar();
     let listaPedidos = [];
-    const sql = `SELECT * FROM Pedido WHERE DataPedido LIKE ?`;
-    const parametros = [`%${termo}%`];
 
-    const [registros] = await conexao.execute(sql, parametros);
-    for (const registro of registros) {
-      const restaurante = new Restaurante(registro.IDRestaurante);
-      const pedido = new Pedido(
-        registro.DataPedido,
-        registro.ValorTotal,
-        restaurante
-      );
-      pedido.IDPedido = registro.IDPedido;
-      listaPedidos.push(pedido);
+    if (!isNaN(parseInt(termo))) {
+      // Consulta pelo código do pedido
+      const sql = `SELECT * FROM Pedido 
+        INNER JOIN restaurante r ON p.IDRestaurante = r.IDRestaurante 
+        WHERE p.IDPedido = ?
+        ORDER BY r.DataPedido`;
+      const parametros = [termo];
+
+      const [registros] = await conexao.execute(sql, parametros);
+      for (const registro of registros) {
+        const restaurante = new Restaurante(registro.IDRestaurante);
+        const pedido = new Pedido(
+          registro.DataPedido,
+          registro.ValorTotal,
+          restaurante
+        );
+        pedido.IDPedido = registro.IDPedido;
+        listaPedidos.push(pedido);
+      }
+    } else {
+      // Consulta pela data do pedido
+      const sql = `SELECT * FROM Pedido p
+      INNER JOIN restaurante r ON p.IDRestaurante = r.IDRestaurante 
+      WHERE p.DataPedido LIKE ?
+      ORDER BY p.DataPedido`;
+      
+      const parametros = [`%${termo}%`];
+
+      const [registros] = await conexao.execute(sql, parametros);
+      for (const registro of registros) {
+        const restaurante = new Restaurante(registro.IDRestaurante);
+        const pedido = new Pedido(
+          registro.DataPedido,
+          registro.ValorTotal,
+          restaurante
+        );
+        pedido.IDPedido = registro.IDPedido;
+        listaPedidos.push(pedido);
+      }
     }
 
     global.poolConexoes.releaseConnection(conexao);

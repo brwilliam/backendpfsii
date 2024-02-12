@@ -6,15 +6,9 @@ export default class RestauranteCtrl {
     if (requisicao.method === "POST" && requisicao.is("application/json")) {
       const dados = requisicao.body;
       const nomeRestaurante = dados.nomeRestaurante;
-      const endereco = dados.endereco;
-      const telefone = dados.telefone;
 
-      if (nomeRestaurante && endereco && telefone) {
-        const restaurante = new Restaurante(
-          nomeRestaurante,
-          endereco,
-          telefone
-        );
+      if (nomeRestaurante) {
+        const restaurante = new Restaurante(nomeRestaurante);
 
         try {
           await restaurante.gravar();
@@ -53,16 +47,9 @@ export default class RestauranteCtrl {
       const dados = requisicao.body;
       const idRestaurante = dados.idRestaurante;
       const nomeRestaurante = dados.nomeRestaurante;
-      const endereco = dados.endereco;
-      const telefone = dados.telefone;
 
-      if (idRestaurante && nomeRestaurante && endereco && telefone) {
-        const restaurante = new Restaurante(
-          idRestaurante,
-          nomeRestaurante,
-          endereco,
-          telefone
-        );
+      if (idRestaurante && nomeRestaurante) {
+        const restaurante = new Restaurante(idRestaurante, nomeRestaurante);
 
         try {
           await restaurante.atualizar();

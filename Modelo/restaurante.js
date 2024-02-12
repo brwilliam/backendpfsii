@@ -4,19 +4,15 @@ export default class Restaurante {
   // Definição dos atributos privados
   #IDRestaurante;
   #NomeRestaurante;
-  #Endereco;
-  #Telefone;
+
 
   constructor(
     IDRestaurante = 0,
-    NomeRestaurante = "",
-    Endereco = "",
-    Telefone = ""
+    NomeRestaurante = ""
   ) {
     this.#IDRestaurante = IDRestaurante;
     this.#NomeRestaurante = NomeRestaurante;
-    this.#Endereco = Endereco;
-    this.#Telefone = Telefone;
+
   }
 
   // Métodos de acesso públicos
@@ -37,21 +33,6 @@ export default class Restaurante {
     this.#NomeRestaurante = novoNome;
   }
 
-  get Endereco() {
-    return this.#Endereco;
-  }
-
-  set Endereco(novoEndereco) {
-    this.#Endereco = novoEndereco;
-  }
-
-  get Telefone() {
-    return this.#Telefone;
-  }
-
-  set Telefone(novoTelefone) {
-    this.#Telefone = novoTelefone;
-  }
 
   // Camada de modelo acessa a camada de persistência
   async gravar() {
