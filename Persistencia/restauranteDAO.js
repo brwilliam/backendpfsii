@@ -5,11 +5,9 @@ export default class RestauranteDAO {
   async gravar(restaurante) {
     if (restaurante instanceof Restaurante) {
       const sql =
-        "INSERT INTO Restaurante (NomeRestaurante, Endereco, Telefone) VALUES (?, ?, ?)";
+        "INSERT INTO Restaurante (NomeRestaurante) VALUES (?)";
       const parametros = [
         restaurante.NomeRestaurante,
-        restaurante.Endereco,
-        restaurante.Telefone,
       ];
       const conexao = await conectar();
       const retorno = await conexao.execute(sql, parametros);
@@ -21,11 +19,9 @@ export default class RestauranteDAO {
   async atualizar(restaurante) {
     if (restaurante instanceof Restaurante) {
       const sql =
-        "UPDATE Restaurante SET NomeRestaurante = ?, Endereco = ?, Telefone = ? WHERE IDRestaurante = ?";
+        "UPDATE Restaurante SET NomeRestaurante = ? WHERE IDRestaurante = ?";
       const parametros = [
         restaurante.NomeRestaurante,
-        restaurante.Endereco,
-        restaurante.Telefone,
         restaurante.IDRestaurante,
       ];
       const conexao = await conectar();
@@ -69,9 +65,7 @@ export default class RestauranteDAO {
     for (const registro of registros) {
       const restaurante = new Restaurante(
         registro.IDRestaurante,
-        registro.NomeRestaurante,
-        registro.Endereco,
-        registro.Telefone
+        registro.NomeRestaurante
       );
       listaRestaurantes.push(restaurante);
     }

@@ -1,5 +1,4 @@
 import PedidoDAO from "../Persistencia/pedidoDAO.js";
-import Restaurante from "restaurante.js"; // Certifique-se de usar a extensão correta do arquivo
 
 export default class Pedido {
   #IDPedido;
@@ -48,6 +47,16 @@ export default class Pedido {
 
   set restaurante(novoRestaurante) {
     this.#restaurante = novoRestaurante;
+  }
+
+  // Método para converter o objeto Pedido em JSON
+  toJSON() {
+    return {
+      IDPedido: this.#IDPedido,
+      DataPedido: this.#DataPedido,
+      ValorTotal: this.#ValorTotal,
+      restaurante: this.#restaurante
+    };
   }
 
   async gravar() {

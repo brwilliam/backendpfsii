@@ -1,10 +1,9 @@
-import PedidoDAO from "../Persistencia/pedidoDAO.js";
+import RestauranteDAO from "../Persistencia/restauranteDAO.js";
 
 export default class Restaurante {
   // Definição dos atributos privados
   #IDRestaurante;
   #NomeRestaurante;
-
 
   constructor(
     IDRestaurante = 0,
@@ -12,11 +11,9 @@ export default class Restaurante {
   ) {
     this.#IDRestaurante = IDRestaurante;
     this.#NomeRestaurante = NomeRestaurante;
-
   }
 
   // Métodos de acesso públicos
-
   get IDRestaurante() {
     return this.#IDRestaurante;
   }
@@ -33,25 +30,32 @@ export default class Restaurante {
     this.#NomeRestaurante = novoNome;
   }
 
+  // Método para converter o objeto Restaurante em JSON
+  toJSON() {
+    return {
+      IDRestaurante: this.#IDRestaurante,
+      NomeRestaurante: this.#NomeRestaurante
+    };
+  }
 
   // Camada de modelo acessa a camada de persistência
   async gravar() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.gravar(this);
+    const resDAO = new RestauranteDAO();
+    await resDAO.gravar(this);
   }
 
   async excluir() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.excluir(this);
+    const resDAO = new RestauranteDAO();
+    await resDAO.excluir(this);
   }
 
   async atualizar() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.atualizar(this);
+    const resDAO = new RestauranteDAO();
+    await resDAO.atualizar(this);
   }
 
   async consultar(parametro) {
-    const pedDAO = new PedidoDAO();
-    return await pedDAO.consultar(parametro);
+    const resDAO = new RestauranteDAO();
+    return await resDAO.consultar(parametro);
   }
 }
