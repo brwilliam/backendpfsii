@@ -1,5 +1,5 @@
 import PedidoDAO from "../Persistencia/pedidoDAO.js";
-import Restaurante from "./Restaurante.js"; // Certifique-se de usar a extensão correta do arquivo
+import Restaurante from "restaurante.js"; // Certifique-se de usar a extensão correta do arquivo
 
 export default class Pedido {
   #IDPedido;
