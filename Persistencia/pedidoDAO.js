@@ -56,15 +56,16 @@ export default class PedidoDAO {
 
     if (!isNaN(parseInt(termo))) {
       // Consulta pelo código do pedido
-      const sql = `SELECT * FROM Pedido 
-        INNER JOIN restaurante r ON p.IDRestaurante = r.IDRestaurante 
+      const sql = `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
+        FROM Pedido p 
+        INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
         WHERE p.IDPedido = ?
         ORDER BY r.DataPedido`;
       const parametros = [termo];
 
       const [registros] = await conexao.execute(sql, parametros);
       for (const registro of registros) {
-        const restaurante = new Restaurante(registro.IDRestaurante);
+        const restaurante = new Restaurante(registro.IDRestaurante, registro.NomeRestaurante);
         const pedido = new Pedido(
           registro.DataPedido,
           registro.ValorTotal,
@@ -75,7 +76,8 @@ export default class PedidoDAO {
       }
     } else {
       // Consulta pela data do pedido
-      const sql = `SELECT * FROM Pedido p
+      const sql = `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
+      FROM Pedido p
       INNER JOIN restaurante r ON p.IDRestaurante = r.IDRestaurante 
       WHERE p.DataPedido LIKE ?
       ORDER BY p.DataPedido`;
@@ -84,7 +86,7 @@ export default class PedidoDAO {
 
       const [registros] = await conexao.execute(sql, parametros);
       for (const registro of registros) {
-        const restaurante = new Restaurante(registro.IDRestaurante);
+        const restaurante = new Restaurante(registro.IDRestaurante, registro.NomeRestaurante);
         const pedido = new Pedido(
           registro.DataPedido,
           registro.ValorTotal,

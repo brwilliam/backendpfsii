@@ -5,7 +5,7 @@ export default class Pedido {
   #IDPedido;
   #DataPedido;
   #ValorTotal;
-  #restaurante; // o pedido pertence ao restaurante
+  #restaurante; // o pedido é um objeto do restaurante
 
   constructor(
     DataPedido = "",

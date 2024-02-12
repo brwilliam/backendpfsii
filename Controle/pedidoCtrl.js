@@ -1,4 +1,4 @@
-import Pedido from "../Modelo/Pedido.js"; // Certifique-se de importar a classe Pedido corretamente
+import Pedido from "../Modelo/pedido.js"; // Certifique-se de importar a classe Pedido corretamente
 
 export default class PedidoCtrl {
   async gravar(requisicao, resposta) {
