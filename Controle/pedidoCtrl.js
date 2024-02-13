@@ -5,8 +5,8 @@ export default class PedidoCtrl {
     resposta.type("application/json");
     if (requisicao.method === "POST" && requisicao.is("application/json")) {
       const dados = requisicao.body;
-      const dataPedido = dados.dataPedido;
-      const valorTotal = dados.valorTotal;
+      const dataPedido = dados.DataPedido;
+      const valorTotal = dados.ValorTotal;
       const restaurante = dados.restaurante;
 
       if (dataPedido && valorTotal > 0 && restaurante) {
