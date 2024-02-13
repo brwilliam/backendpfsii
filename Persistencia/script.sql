@@ -1,9 +1,3 @@
--- Criação do esquema sistema_restaurante
-CREATE SCHEMA sistema_restaurante;
-
--- Mudança para o esquema sistema_restaurante
-USE sistema_restaurante;
-
 -- Criação da tabela Restaurante
 CREATE TABLE Restaurante (
     IDRestaurante INT AUTO_INCREMENT PRIMARY KEY,
