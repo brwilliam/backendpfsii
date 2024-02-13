@@ -4,100 +4,98 @@ import conectar from "./conexao.js";
 
 export default class PedidoDAO {
   async gravar(pedido) {
-    if (pedido instanceof Pedido) {
-      const sql = `INSERT INTO Pedido (DataPedido, ValorTotal, IDRestaurante) VALUES (?, ?, ?)`;
-      const parametros = [
-        pedido.DataPedido,
-        pedido.ValorTotal,
-        pedido.restaurante.IDRestaurante,
-      ];
+    if (!(pedido instanceof Pedido)) {
+      throw new Error('O objeto fornecido não é uma instância de Pedido.');
+    }
 
+    const sql = `INSERT INTO Pedido (DataPedido, ValorTotal, IDRestaurante) VALUES (?, ?, ?)`;
+    const parametros = [
+      pedido.DataPedido,
+      pedido.ValorTotal,
+      pedido.restaurante.IDRestaurante,
+    ];
+
+    try {
       const conexao = await conectar();
-      const [resultado] = await conexao.execute(sql, parametros);
-      pedido.IDPedido = resultado.insertId;
+      const resultado = await conexao.execute(sql, parametros);
+      pedido.IDPedido = resultado[0].insertId;
       global.poolConexoes.releaseConnection(conexao);
+    } catch (error) {
+      throw new Error(`Erro ao gravar pedido no banco de dados: ${error.message}`);
     }
   }
 
   async atualizar(pedido) {
-    if (pedido instanceof Pedido) {
-      const sql = `UPDATE Pedido SET DataPedido = ?, ValorTotal = ?, IDRestaurante = ? WHERE IDPedido = ?`;
-      const parametros = [
-        pedido.DataPedido,
-        pedido.ValorTotal,
-        pedido.restaurante.IDRestaurante,
-        pedido.IDPedido,
-      ];
+    if (!(pedido instanceof Pedido)) {
+      throw new Error('O objeto fornecido não é uma instância de Pedido.');
+    }
 
+    const sql = `UPDATE Pedido SET DataPedido = ?, ValorTotal = ?, IDRestaurante = ? WHERE IDPedido = ?`;
+    const parametros = [
+      pedido.DataPedido,
+      pedido.ValorTotal,
+      pedido.restaurante.IDRestaurante,
+      pedido.IDPedido,
+    ];
+
+    try {
       const conexao = await conectar();
       await conexao.execute(sql, parametros);
       global.poolConexoes.releaseConnection(conexao);
+    } catch (error) {
+      throw new Error(`Erro ao atualizar pedido no banco de dados: ${error.message}`);
     }
   }
 
   async excluir(pedido) {
-    if (pedido instanceof Pedido) {
-      const sql = `DELETE FROM Pedido WHERE IDPedido = ?`;
-      const parametros = [pedido.IDPedido];
+    if (!(pedido instanceof Pedido)) {
+      throw new Error('O objeto fornecido não é uma instância de Pedido.');
+    }
 
+    const sql = `DELETE FROM Pedido WHERE IDPedido = ?`;
+    const parametros = [pedido.IDPedido];
+
+    try {
       const conexao = await conectar();
       await conexao.execute(sql, parametros);
       global.poolConexoes.releaseConnection(conexao);
+    } catch (error) {
+      throw new Error(`Erro ao excluir pedido no banco de dados: ${error.message}`);
     }
   }
 
   async consultar(termo) {
-    if (!termo) {
-      termo = "";
-    }
+    termo = termo || '';
 
     const conexao = await conectar();
     let listaPedidos = [];
 
-    if (!isNaN(parseInt(termo))) {
-      // Consulta pelo código do pedido
-      const sql = `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
-        FROM Pedido p 
-        INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
-        WHERE p.IDPedido = ?
-        ORDER BY p.DataPedido`;
-      const parametros = [termo];
+    try {
+      const sql = isNaN(parseInt(termo))
+        ? `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
+          FROM Pedido p
+          INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
+          WHERE p.DataPedido LIKE ?
+          ORDER BY p.DataPedido`
+        : `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
+          FROM Pedido p 
+          INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
+          WHERE p.IDPedido = ?
+          ORDER BY p.DataPedido`;
+      const parametros = isNaN(parseInt(termo)) ? [`%${termo}%`] : [termo];
 
       const [registros] = await conexao.execute(sql, parametros);
       for (const registro of registros) {
         const restaurante = new Restaurante(registro.IDRestaurante, registro.NomeRestaurante);
-        const pedido = new Pedido(
-          registro.DataPedido,
-          registro.ValorTotal,
-          restaurante
-        );
-        pedido.IDPedido = registro.IDPedido;
+        const pedido = new Pedido(registro.IDPedido, registro.DataPedido, registro.ValorTotal, restaurante);
         listaPedidos.push(pedido);
       }
-    } else {
-      // Consulta pela data do pedido
-      const sql = `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
-      FROM Pedido p
-      INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
-      WHERE p.DataPedido LIKE ?
-      ORDER BY p.DataPedido`;
-      
-      const parametros = [`%${termo}%`];
-
-      const [registros] = await conexao.execute(sql, parametros);
-      for (const registro of registros) {
-        const restaurante = new Restaurante(registro.IDRestaurante, registro.NomeRestaurante);
-        const pedido = new Pedido(
-          registro.DataPedido,
-          registro.ValorTotal,
-          restaurante
-        );
-        pedido.IDPedido = registro.IDPedido;
-        listaPedidos.push(pedido);
-      }
+    } catch (error) {
+      throw new Error(`Erro ao consultar pedidos no banco de dados: ${error.message}`);
+    } finally {
+      global.poolConexoes.releaseConnection(conexao);
     }
 
-    global.poolConexoes.releaseConnection(conexao);
     return listaPedidos;
   }
 }

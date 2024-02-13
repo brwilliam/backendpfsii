@@ -8,9 +8,9 @@ export default class Pedido {
 
   constructor(
     IDPedido=0,
-    DataPedido = "",
+    DataPedido = '',
     ValorTotal = 0,
-    restaurante = {}
+    restaurante ={}
   ) {
     this.#IDPedido = IDPedido; // O ID será gerado automaticamente pelo banco de dados
     this.#DataPedido = DataPedido;
