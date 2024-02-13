@@ -10,7 +10,7 @@ export default class PedidoCtrl {
       const restaurante = dados.restaurante;
 
       if (dataPedido && valorTotal > 0 && restaurante) {
-        const pedido = new Pedido(dataPedido, valorTotal, restaurante);
+        const pedido = new Pedido(0, dataPedido, valorTotal, restaurante);
 
         try {
           await pedido.gravar();

@@ -7,11 +7,12 @@ export default class Pedido {
   #restaurante; // o pedido é um objeto do restaurante
 
   constructor(
+    IDPedido=0,
     DataPedido = "",
     ValorTotal = 0,
     restaurante = {}
   ) {
-    this.#IDPedido = 0; // O ID será gerado automaticamente pelo banco de dados
+    this.#IDPedido = IDPedido; // O ID será gerado automaticamente pelo banco de dados
     this.#DataPedido = DataPedido;
     this.#ValorTotal = ValorTotal;
     this.#restaurante = restaurante;
