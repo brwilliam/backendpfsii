@@ -72,12 +72,12 @@ export default class PedidoDAO {
 
     try {
       const sql = isNaN(parseInt(termo))
-        ? `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
+        ? `SELECT p.IDPedido, DATE_FORMAT(p.DataPedido, '%Y-%m-%d') AS DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
           FROM Pedido p
           INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
           WHERE p.DataPedido LIKE ?
           ORDER BY p.DataPedido`
-        : `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
+        : `SELECT p.IDPedido, DATE_FORMAT(p.DataPedido, '%Y-%m-%d') AS DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
           FROM Pedido p 
           INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
           WHERE p.IDPedido = ?
