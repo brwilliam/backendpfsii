@@ -5,10 +5,10 @@ export default class RestauranteCtrl {
     resposta.type("application/json");
     if (requisicao.method === "POST" && requisicao.is("application/json")) {
       const dados = requisicao.body;
-      const nomeRestaurante = dados.nomeRestaurante;
+      const nomeRestaurante = dados.NomeRestaurante;
 
       if (nomeRestaurante) {
-        const restaurante = new Restaurante(nomeRestaurante);
+        const restaurante = new Restaurante(0, nomeRestaurante);
 
         try {
           await restaurante.gravar();

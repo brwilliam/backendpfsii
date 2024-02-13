@@ -60,7 +60,7 @@ export default class PedidoDAO {
         FROM Pedido p 
         INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
         WHERE p.IDPedido = ?
-        ORDER BY r.DataPedido`;
+        ORDER BY p.DataPedido`;
       const parametros = [termo];
 
       const [registros] = await conexao.execute(sql, parametros);
@@ -78,7 +78,7 @@ export default class PedidoDAO {
       // Consulta pela data do pedido
       const sql = `SELECT p.IDPedido, p.DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
       FROM Pedido p
-      INNER JOIN restaurante r ON p.IDRestaurante = r.IDRestaurante 
+      INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
       WHERE p.DataPedido LIKE ?
       ORDER BY p.DataPedido`;
       
