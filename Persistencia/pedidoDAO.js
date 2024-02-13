@@ -68,34 +68,30 @@ export default class PedidoDAO {
     termo = termo || '';
 
     const conexao = await conectar();
-    let listaPedidos = [];
 
     try {
-      const sql = isNaN(parseInt(termo))
-        ? `SELECT p.IDPedido, DATE_FORMAT(p.DataPedido, '%Y-%m-%d') AS DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
-          FROM Pedido p
-          INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
-          WHERE p.DataPedido LIKE ?
-          ORDER BY p.DataPedido`
-        : `SELECT p.IDPedido, DATE_FORMAT(p.DataPedido, '%Y-%m-%d') AS DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
-          FROM Pedido p 
-          INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
-          WHERE p.IDPedido = ?
-          ORDER BY p.DataPedido`;
-      const parametros = isNaN(parseInt(termo)) ? [`%${termo}%`] : [termo];
+      const sql = `SELECT p.IDPedido, DATE_FORMAT(p.DataPedido, '%Y-%m-%d') AS DataPedido, p.ValorTotal, r.IDRestaurante, r.NomeRestaurante
+        FROM Pedido p
+        INNER JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante 
+        WHERE p.DataPedido LIKE ? OR p.IDPedido = ?
+        ORDER BY p.DataPedido`;
+
+      const parametros = [`%${termo}%`, termo];
 
       const [registros] = await conexao.execute(sql, parametros);
-      for (const registro of registros) {
+
+      const listaPedidos = registros.map(registro => {
         const restaurante = new Restaurante(registro.IDRestaurante, registro.NomeRestaurante);
-        const pedido = new Pedido(registro.IDPedido, registro.DataPedido, registro.ValorTotal, restaurante);
-        listaPedidos.push(pedido);
-      }
+        return new Pedido(registro.IDPedido, registro.DataPedido, registro.ValorTotal, restaurante);
+      });
+
+      return listaPedidos;
     } catch (error) {
       throw new Error(`Erro ao consultar pedidos no banco de dados: ${error.message}`);
     } finally {
       global.poolConexoes.releaseConnection(conexao);
     }
-
-    return listaPedidos;
   }
 }
+
+
