@@ -83,7 +83,7 @@ export default class RestauranteCtrl {
     resposta.type("application/json");
     if (requisicao.method === "DELETE" && requisicao.is("application/json")) {
       const dados = requisicao.body;
-      const idRestaurante = dados.idRestaurante;
+      const idRestaurante = dados.IDRestaurante;
 
       if (idRestaurante) {
         const restaurante = new Restaurante(idRestaurante);
