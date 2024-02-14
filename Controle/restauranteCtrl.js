@@ -45,8 +45,8 @@ export default class RestauranteCtrl {
       requisicao.is("application/json")
     ) {
       const dados = requisicao.body;
-      const idRestaurante = dados.idRestaurante;
-      const nomeRestaurante = dados.nomeRestaurante;
+      const idRestaurante = dados.IDRestaurante;
+      const nomeRestaurante = dados.NomeRestaurante;
 
       if (idRestaurante && nomeRestaurante) {
         const restaurante = new Restaurante(idRestaurante, nomeRestaurante);
