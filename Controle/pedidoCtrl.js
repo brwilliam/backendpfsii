@@ -91,7 +91,7 @@ export default class PedidoCtrl {
     resposta.type("application/json");
     if (requisicao.method === "DELETE" && requisicao.is("application/json")) {
       const dados = requisicao.body;
-      const idPedido = dados.idPedido;
+      const idPedido = dados.IDPedido;
 
       if (idPedido) {
         const pedido = new Pedido(idPedido);
