@@ -46,9 +46,9 @@ export default class PedidoCtrl {
       requisicao.is("application/json")
     ) {
       const dados = requisicao.body;
-      const idPedido = dados.idPedido;
-      const dataPedido = dados.dataPedido;
-      const valorTotal = dados.valorTotal;
+      const idPedido = dados.IDPedido;
+      const dataPedido = dados.DataPedido;
+      const valorTotal = dados.ValorTotal;
       const restaurante = dados.restaurante;
 
       if (idPedido && dataPedido && valorTotal > 0 && restaurante) {
