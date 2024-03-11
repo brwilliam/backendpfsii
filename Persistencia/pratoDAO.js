@@ -67,28 +67,34 @@ export default class PratoDAO {
   }
 
   async consultar(termo) {
-    const listaPratos = [];
-    if(!isNAN(termo)){
-        const sql = 'SELECT * FROM prato as p WHERE p.pratoID = ?'
-        
-    }
-
-    return listaPratos;
-
     const conexao = await conectar();
 
     try {
-      const sql = `SELECT PratoID, Nome, Preco FROM Pratos WHERE Nome LIKE ? OR PratoID = ? ORDER BY Nome`;
+        const sql = `
+            SELECT 
+                c.Nome AS NomeCliente,
+                p.Nome AS NomePrato
+            FROM
+                Clientes c
+                INNER JOIN Cliente_Prato cp ON c.ClienteID = cp.ClienteID
+                INNER JOIN Pratos p ON cp.PratoID = p.PratoID
+            WHERE
+                c.Nome LIKE ?
+                OR p.Nome LIKE ?
+            ORDER BY p.Nome
+        `;
 
-      const parametros = [`%${termo}%`, termo];
+        const parametros = [`%${termo}%`, `%${termo}%`];
 
-      const [registros] = await conexao.execute(sql, parametros);
+        const [registros] = await conexao.execute(sql, parametros);
 
-      return registros.map(registro => new Prato(registro.PratoID, registro.Nome, registro.Preco));
+        return registros.map(registro => ({ NomeCliente: registro.NomeCliente, NomePrato: registro.NomePrato }));
     } catch (error) {
-      throw new Error(`Erro ao consultar pratos no banco de dados: ${error.message}`);
+        throw new Error(`Erro ao consultar clientes e pratos no banco de dados: ${error.message}`);
     } finally {
-      global.poolConexoes.releaseConnection(conexao);
+        global.poolConexoes.releaseConnection(conexao);
     }
-  }
+}
+
+
 }
