@@ -15,25 +15,26 @@ CREATE TABLE Pedido (
 
 -- Criação das tabelas relações muitos para muitos
 
--- Criar a tabela Clientes
-CREATE TABLE Clientes (
-    ClienteID INT AUTO_INCREMENT PRIMARY KEY,
-    Nome VARCHAR(100) NOT NULL,
-    Email VARCHAR(100) UNIQUE NOT NULL
+CREATE TABLE Cliente (
+  ID_Cliente INT PRIMARY KEY AUTO_INCREMENT,
+  Nome VARCHAR(255) NOT NULL,
+  Telefone VARCHAR(20) NULL,  -- Telefone now enforces not null values
+  Endereco VARCHAR(255) NOT NULL
 );
 
--- Criar a tabela Pratos
-CREATE TABLE Pratos (
-    PratoID INT AUTO_INCREMENT PRIMARY KEY,
-    Nome VARCHAR(100) NOT NULL,
-    Preco DECIMAL(10, 2) NOT NULL
+
+CREATE TABLE Prato (
+  ID_Prato INT PRIMARY KEY AUTO_INCREMENT,
+  Nome VARCHAR(255) NOT NULL,
+  Preco DECIMAL(10,2) NOT NULL
 );
 
--- Criar a tabela de associação Clientes_Pratos
+
 CREATE TABLE Cliente_Prato (
-    ClienteID INT,
-    PratoID INT,
-    PRIMARY KEY (ClienteID, PratoID),
-    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID),
-    FOREIGN KEY (PratoID) REFERENCES Pratos(PratoID)
+  ID_ClientePrato INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Cliente INT NOT NULL,
+  ID_Prato INT NOT NULL,
+  Quantidade INT NOT NULL DEFAULT 1,
+  FOREIGN KEY (ID_Cliente) REFERENCES Cliente (ID_Cliente),
+  FOREIGN KEY (ID_Prato) REFERENCES Prato (ID_Prato)  
 );

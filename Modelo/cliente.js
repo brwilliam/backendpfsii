@@ -3,12 +3,14 @@ import ClienteDAO from "../Persistencia/clienteDAO.js";
 export default class Cliente {
   #idCliente;
   #nome;
-  #email;
+  #telefone;
+  #endereco;
 
-  constructor(idCliente = 0, nome = '', email = '') {
+  constructor(idCliente = 0, nome = '', telefone = '', endereco = '') {
     this.#idCliente = idCliente;
     this.#nome = nome;
-    this.#email = email;
+    this.#telefone = telefone;
+    this.#endereco = endereco;
   }
 
   get idCliente() {
@@ -27,12 +29,20 @@ export default class Cliente {
     this.#nome = novoNome;
   }
 
-  get email() {
-    return this.#email;
+  get telefone() {
+    return this.#telefone;
   }
 
-  set email(novoEmail) {
-    this.#email = novoEmail;
+  set telefone(novoTelefone) {
+    this.#telefone = novoTelefone;
+  }
+
+  get endereco() {
+    return this.#endereco;
+  }
+
+  set endereco(novoEndereco) {
+    this.#endereco = novoEndereco;
   }
 
   // Converte o objeto Cliente para o formato JSON
@@ -40,7 +50,8 @@ export default class Cliente {
     return {
       idCliente: this.#idCliente,
       nome: this.#nome,
-      email: this.#email
+      telefone: this.#telefone,
+      endereco: this.#endereco
     };
   }
 

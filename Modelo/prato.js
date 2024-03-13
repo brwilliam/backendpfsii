@@ -1,19 +1,17 @@
 import PratoDAO from "../Persistencia/pratoDAO.js";
-import Cliente from "./cliente.js";
+import Cliente from "./Cliente.js"
 
 export default class Prato {
   #pratoID;
   #cliente;
   #nome;
   #preco;
- 
 
-  constructor(pratoID = 0,cliente , nome = '', preco = 0.0, ) {
+  constructor(pratoID = 0, cliente = new Cliente(), nome = '', preco = 0.0) {
     this.#pratoID = pratoID;
     this.#cliente = cliente;
     this.#nome = nome;
     this.#preco = preco;
-    
   }
 
   get pratoID() {
@@ -47,13 +45,12 @@ export default class Prato {
   set preco(novoPreco) {
     this.#preco = novoPreco;
   }
-  
 
   // Converte o objeto Prato para o formato JSON
   toJSON() {
     return {
       pratoID: this.#pratoID,
-      cliente:this.#cliente,
+      cliente: this.#cliente.toJSON(),
       nome: this.#nome,
       preco: this.#preco
     };

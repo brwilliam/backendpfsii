@@ -1,12 +1,24 @@
 import ClientePratoDAO from "../Persistencia/clientePratoDAO.js";
 
 export default class ClientePrato {
+  #idClientePrato;
   #clienteID;
   #pratoID;
+  #quantidade;
 
-  constructor(clienteID, pratoID) {
+  constructor(idClientePrato = 0, clienteID, pratoID, quantidade = 1) {
+    this.#idClientePrato = idClientePrato;
     this.#clienteID = clienteID;
     this.#pratoID = pratoID;
+    this.#quantidade = quantidade;
+  }
+
+  get idClientePrato() {
+    return this.#idClientePrato;
+  }
+
+  set idClientePrato(novoIdClientePrato) {
+    this.#idClientePrato = novoIdClientePrato;
   }
 
   get clienteID() {
@@ -25,13 +37,12 @@ export default class ClientePrato {
     this.#pratoID = novoPratoID;
   }
 
-  // Não há necessidade de uma representação JSON direta para esta classe em muitos casos,
-  // mas poderia ser útil dependendo da implementação da API ou da interface de usuário.
-  toJSON() {
-    return {
-      clienteID: this.#clienteID,
-      pratoID: this.#pratoID,
-    };
+  get quantidade() {
+    return this.#quantidade;
+  }
+
+  set quantidade(novaQuantidade) {
+    this.#quantidade = novaQuantidade;
   }
 
   async adicionar() {
@@ -52,5 +63,14 @@ export default class ClientePrato {
   static async consultarClientesDoPrato(pratoID) {
     const clientePratoDAO = new ClientePratoDAO();
     return await clientePratoDAO.consultarClientesDoPrato(pratoID);
+  }
+
+  toJSON() {
+    return {
+      idClientePrato: this.#idClientePrato,
+      clienteID: this.#clienteID,
+      pratoID: this.#pratoID,
+      quantidade: this.#quantidade,
+    };
   }
 }
