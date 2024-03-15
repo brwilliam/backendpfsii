@@ -3,6 +3,7 @@ import cors from "cors";
 import rotaRestaurante from "./Rotas/rotaRestaurante.js";
 import rotaPedido from "./Rotas/rotaPedido.js"; // Importe a rota do pedido aqui
 import rotaLogin from "./Rotas/rotaLogin.js"
+import rotaGarcom from "./Rotas/rotaGarcom.js"
 import dotenv from "dotenv";
 import session from "express-session";
 import { verificarAcesso } from "./Seguranca/Autenticacao.js";
@@ -29,6 +30,7 @@ app.use(session({
 app.use('/login',rotaLogin);
 app.use("/restaurante",verificarAcesso, rotaRestaurante); // Use a rota do restaurante
 app.use("/pedido",verificarAcesso, rotaPedido); // Use a rota do pedido
+app.use("/garcom", rotaGarcom); 
 
 app.listen(porta, host, () => {
   console.log(`Servidor escutando na porta ${host}:${porta}.`);

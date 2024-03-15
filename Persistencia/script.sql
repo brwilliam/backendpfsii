@@ -15,26 +15,25 @@ CREATE TABLE Pedido (
 
 -- Criação das tabelas relações muitos para muitos
 
-CREATE TABLE Cliente (
-  ID_Cliente INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Garcom (
+  GarcomID INT AUTO_INCREMENT PRIMARY KEY,
   Nome VARCHAR(255) NOT NULL,
-  Telefone VARCHAR(20) NULL,  -- Telefone now enforces not null values
-  Endereco VARCHAR(255) NOT NULL
+  Telefone VARCHAR(15) NOT NULL
 );
 
-
-CREATE TABLE Prato (
-  ID_Prato INT PRIMARY KEY AUTO_INCREMENT,
-  Nome VARCHAR(255) NOT NULL,
-  Preco DECIMAL(10,2) NOT NULL
+CREATE TABLE Mesa (
+  MesaID INT AUTO_INCREMENT PRIMARY KEY,
+  Numero INT NOT NULL,
+  Capacidade INT NOT NULL
 );
 
+-- Criar a tabela de relacionamento Garcom_Mesa
 
-CREATE TABLE Cliente_Prato (
-  ID_ClientePrato INT PRIMARY KEY AUTO_INCREMENT,
-  ID_Cliente INT NOT NULL,
-  ID_Prato INT NOT NULL,
-  Quantidade INT NOT NULL DEFAULT 1,
-  FOREIGN KEY (ID_Cliente) REFERENCES Cliente (ID_Cliente),
-  FOREIGN KEY (ID_Prato) REFERENCES Prato (ID_Prato)  
+CREATE TABLE GarcomMesa (
+  GarcomID INT,
+  MesaID INT,
+  DataAtendimento DATE,
+  PRIMARY KEY (GarcomID, MesaID),
+  FOREIGN KEY (GarcomID) REFERENCES Garcom(GarcomID),
+  FOREIGN KEY (MesaID) REFERENCES Mesa(MesaID)
 );
