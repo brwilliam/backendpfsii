@@ -37,3 +37,31 @@ CREATE TABLE GarcomMesa (
   FOREIGN KEY (GarcomID) REFERENCES Garcom(GarcomID),
   FOREIGN KEY (MesaID) REFERENCES Mesa(MesaID)
 );
+
+-- Criação da tabela de relacionamento Pedido_GarcomMesa
+CREATE TABLE Pedido_GarcomMesa (
+    IDPedido INT,
+    GarcomID INT,
+    MesaID INT,
+    PRIMARY KEY (IDPedido),
+    FOREIGN KEY (IDPedido) REFERENCES Pedido(IDPedido),
+    FOREIGN KEY (GarcomID, MesaID) REFERENCES GarcomMesa(GarcomID, MesaID)
+);
+
+
+SELECT 
+    Pedido.IDPedido,
+    Pedido.IDRestaurante,
+    Garcom.Nome AS NomeGarcom,
+    Mesa.Numero AS NumeroMesa,
+    GarcomMesa.DataAtendimento
+FROM 
+    PedidoGarcomMesa
+JOIN 
+    Pedido ON PedidoGarcomMesa.IDPedido = Pedido.IDPedido
+JOIN 
+    GarcomMesa ON PedidoGarcomMesa.GarcomID = GarcomMesa.GarcomID AND PedidoGarcomMesa.MesaID = GarcomMesa.MesaID
+JOIN 
+    Garcom ON GarcomMesa.GarcomID = Garcom.GarcomID
+JOIN 
+    Mesa ON GarcomMesa.MesaID = Mesa.MesaID;

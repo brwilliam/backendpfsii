@@ -1,5 +1,5 @@
 import Garcom from "../Modelo/garcom.js";
-import conectar from "./conexao.js";
+import conectar from "../Persistencia/conexao.js";
 
 export default class GarcomCtrl {
   async gravar(requisicao, resposta) {

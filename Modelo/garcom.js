@@ -1,6 +1,6 @@
 import PedidoDAO from "../Persistencia/pedidoDAO.js";
 
-export class Garcom {
+export default class Garcom {
   #garcomID;
   #nome;
   #telefone;
