@@ -1,7 +1,7 @@
 import conectar from "./conexao.js";
 
 export default class PedidoGarcomMesaDAO {
-  async gravarPedidoGarcomMesa(pedidoGarcomMesa) {
+  async gravar(pedidoGarcomMesa) {
     const sql = `INSERT INTO GarcomMesa (GarcomID, MesaID, DataAtendimento) VALUES (?, ?, ?)`;
     const parametros = [
       pedidoGarcomMesa.idGarcom,
@@ -18,7 +18,7 @@ export default class PedidoGarcomMesaDAO {
     }
   }
 
-  async excluirPedidoGarcomMesa(idPedido) {
+  async excluir(idPedido) {
     const sql = `DELETE FROM GarcomMesa WHERE IDPedido = ?`;
     const parametros = [idPedido];
 
@@ -31,7 +31,7 @@ export default class PedidoGarcomMesaDAO {
     }
   }
 
-  async atualizarPedidoGarcomMesa(idPedido, pedidoGarcomMesa) {
+  async atualizar(idPedido, pedidoGarcomMesa) {
     const sql = `UPDATE GarcomMesa SET GarcomID = ?, MesaID = ?, DataAtendimento = ? WHERE IDPedido = ?`;
     const parametros = [
       pedidoGarcomMesa.idGarcom,
@@ -49,7 +49,7 @@ export default class PedidoGarcomMesaDAO {
     }
   }
 
-  async consultarPedidoGarcomMesaPorId(idPedido) {
+  async consultarPorId(idPedido) {
     const sql = `SELECT * FROM GarcomMesa WHERE IDPedido = ?`;
     const parametros = [idPedido];
 

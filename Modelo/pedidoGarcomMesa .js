@@ -47,22 +47,22 @@ export default class PedidoGarcomMesa {
 
   async gravar() {
     const pedidoDAO = new PedidoDAO();
-    await pedidoDAO.gravarPedidoGarcomMesa(this.toJSON());
+    await pedidoDAO.gravar(this.toJSON());
   }
 
   async excluir() {
     const pedidoDAO = new PedidoDAO();
-    await pedidoDAO.excluirPedidoGarcomMesa(this.#idPedido);
+    await pedidoDAO.excluir(this.#idPedido);
   }
 
   async atualizar() {
     const pedidoDAO = new PedidoDAO();
-    await pedidoDAO.atualizarPedidoGarcomMesa(this.#idPedido, this.toJSON());
+    await pedidoDAO.atualizar(this.#idPedido, this.toJSON());
   }
 
   async consultar(termo) {
     const pedidoDAO = new PedidoDAO();
-    return await pedidoDAO.consultarPedidoGarcomMesa(termo);
+    return await pedidoDAO.consultar(termo);
   }
 
   // Método para converter o objeto PedidoGarcomMesa em JSON

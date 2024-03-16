@@ -5,7 +5,7 @@ const garcomCtrl = new GarcomCtrl();
 const rotaGarcom = Router();
 
 rotaGarcom
-  .get("/:termo", garcomCtrl.consultar)
+  .get("/", garcomCtrl.consultar)
   .get("/:id", garcomCtrl.consultarPorId)
   .post("/", garcomCtrl.gravar)
   .put("/:id", garcomCtrl.atualizar)

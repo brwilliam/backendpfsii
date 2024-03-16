@@ -1,7 +1,7 @@
 import PedidoGarcomMesaDAO from "../Persistencia/pedidoGarcomMesaDAO.js";
 
 export default class PedidoGarcomMesaCtrl {
-  async gravarPedidoGarcomMesa(requisicao, resposta) {
+  async gravar(requisicao, resposta) {
     resposta.type("application/json");
     if (requisicao.method === "POST" && requisicao.is("application/json")) {
       const dados = requisicao.body;
@@ -18,7 +18,7 @@ export default class PedidoGarcomMesaCtrl {
 
         try {
           const pedidoGarcomMesaDAO = new PedidoGarcomMesaDAO();
-          await pedidoGarcomMesaDAO.gravarPedidoGarcomMesa(pedidoGarcomMesa);
+          await pedidoGarcomMesaDAO.gravar(pedidoGarcomMesa);
           resposta.status(200).json({
             status: true,
             mensagem: "Pedido do garçom para mesa incluído com sucesso!",
@@ -44,7 +44,7 @@ export default class PedidoGarcomMesaCtrl {
     }
   }
 
-  async excluirPedidoGarcomMesa(requisicao, resposta) {
+  async excluir(requisicao, resposta) {
     resposta.type("application/json");
     if (requisicao.method === "DELETE" && requisicao.is("application/json")) {
       const idPedido = requisicao.params.idPedido;
@@ -52,7 +52,7 @@ export default class PedidoGarcomMesaCtrl {
       if (idPedido) {
         try {
           const pedidoGarcomMesaDAO = new PedidoGarcomMesaDAO();
-          await pedidoGarcomMesaDAO.excluirPedidoGarcomMesa(idPedido);
+          await pedidoGarcomMesaDAO.excluir(idPedido);
           resposta.status(200).json({
             status: true,
             mensagem: "Pedido do garçom para mesa excluído com sucesso!",
@@ -77,7 +77,7 @@ export default class PedidoGarcomMesaCtrl {
     }
   }
 
-  async atualizarPedidoGarcomMesa(requisicao, resposta) {
+  async atualizar(requisicao, resposta) {
     resposta.type("application/json");
     if (
       (requisicao.method === "PUT" || requisicao.method === "PATCH") &&
@@ -98,7 +98,7 @@ export default class PedidoGarcomMesaCtrl {
 
         try {
           const pedidoGarcomMesaDAO = new PedidoGarcomMesaDAO();
-          await pedidoGarcomMesaDAO.atualizarPedidoGarcomMesa(idPedido, pedidoGarcomMesa);
+          await pedidoGarcomMesaDAO.atualizar(idPedido, pedidoGarcomMesa);
           resposta.status(200).json({
             status: true,
             mensagem: "Pedido do garçom para mesa atualizado com sucesso!",
@@ -125,7 +125,7 @@ export default class PedidoGarcomMesaCtrl {
     }
   }
 
-  async consultarPedidoGarcomMesaPorId(requisicao, resposta) {
+  async consultarPorId(requisicao, resposta) {
     resposta.type("application/json");
     const idPedido = requisicao.params.idPedido;
   
@@ -133,7 +133,7 @@ export default class PedidoGarcomMesaCtrl {
       if (idPedido) {
         try {
           const pedidoGarcomMesaDAO = new PedidoGarcomMesaDAO();
-          const pedidoGarcomMesa = await pedidoGarcomMesaDAO.consultarPedidoGarcomMesaPorId(idPedido);
+          const pedidoGarcomMesa = await pedidoGarcomMesaDAO.consultarPorId(idPedido);
           if (pedidoGarcomMesa) {
             resposta.status(200).json({
               status: true,

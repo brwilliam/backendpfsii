@@ -46,21 +46,21 @@ export default class Garcom {
 
   async gravar() {
     const pedDAO = new PedidoDAO();
-    await pedDAO.gravarGarcom(this.toJSON());
+    await pedDAO.gravar(this.toJSON());
   }
 
   async excluir() {
     const pedDAO = new PedidoDAO();
-    await pedDAO.excluirGarcom(this.#garcomID);
+    await pedDAO.excluir(this.#garcomID);
   }
 
   async atualizar() {
     const pedDAO = new PedidoDAO();
-    await pedDAO.atualizarGarcom(this.#garcomID, this.toJSON());
+    await pedDAO.atualizar(this.#garcomID, this.toJSON());
   }
 
   async consultar(termo) {
     const pedDAO = new PedidoDAO();
-    return await pedDAO.consultarGarcom(termo);
+    return await pedDAO.consultar(termo);
   }
 }

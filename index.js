@@ -33,8 +33,8 @@ app.use(
 app.use("/login", rotaLogin);
 app.use("/restaurante", verificarAcesso, rotaRestaurante); // Use a rota do restaurante
 app.use("/pedido", verificarAcesso, rotaPedido); // Use a rota do pedido
-app.use("/garcom", rotaGarcom);
-app.use("/pedido-garcom-mesa", rotaPedidoGarcomMesa); // Adicione a rota do pedido garcom mesa
+app.use("/garcom",verificarAcesso, rotaGarcom);
+app.use("/pedido-garcom-mesa",verificarAcesso, rotaPedidoGarcomMesa); // Adicione a rota do pedido garcom mesa
 
 app.listen(porta, host, () => {
   console.log(`Servidor escutando na porta ${host}:${porta}.`);

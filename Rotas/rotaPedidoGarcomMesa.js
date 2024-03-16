@@ -5,9 +5,9 @@ const pedidoGarcomMesaCtrl = new PedidoGarcomMesaCtrl();
 const rotaPedidoGarcomMesa = Router();
 
 rotaPedidoGarcomMesa
-  .post("/", pedidoGarcomMesaCtrl.gravarPedidoGarcomMesa)
-  .put("/:idPedido", pedidoGarcomMesaCtrl.atualizarPedidoGarcomMesa)
-  .delete("/:idPedido", pedidoGarcomMesaCtrl.excluirPedidoGarcomMesa)
-  .get("/:idPedido", pedidoGarcomMesaCtrl.consultarPedidoGarcomMesaPorId);
+  .post("/", pedidoGarcomMesaCtrl.gravar)
+  .put("/:idPedido", pedidoGarcomMesaCtrl.atualizar)
+  .delete("/:idPedido", pedidoGarcomMesaCtrl.excluir)
+  .get("/:idPedido", pedidoGarcomMesaCtrl.consultarPorId);
 
 export default rotaPedidoGarcomMesa;
