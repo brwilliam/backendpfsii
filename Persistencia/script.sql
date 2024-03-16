@@ -48,20 +48,6 @@ CREATE TABLE Pedido_GarcomMesa (
     FOREIGN KEY (GarcomID, MesaID) REFERENCES GarcomMesa(GarcomID, MesaID)
 );
 
+--SCRIPT DE CONSULTA COM IDpedido/Restaurante/numMesa/NomeGarcom/data/valor
 
-SELECT 
-    Pedido.IDPedido,
-    Pedido.IDRestaurante,
-    Garcom.Nome AS NomeGarcom,
-    Mesa.Numero AS NumeroMesa,
-    GarcomMesa.DataAtendimento
-FROM 
-    PedidoGarcomMesa
-JOIN 
-    Pedido ON PedidoGarcomMesa.IDPedido = Pedido.IDPedido
-JOIN 
-    GarcomMesa ON PedidoGarcomMesa.GarcomID = GarcomMesa.GarcomID AND PedidoGarcomMesa.MesaID = GarcomMesa.MesaID
-JOIN 
-    Garcom ON GarcomMesa.GarcomID = Garcom.GarcomID
-JOIN 
-    Mesa ON GarcomMesa.MesaID = Mesa.MesaID;
+SELECT p.IDPedido, r.NomeRestaurante, m.Numero AS NumeroMesa, g.Nome AS NomeGarcom, gm.DataAtendimento AS DataAtendimento, p.ValorTotal FROM Pedido p JOIN Restaurante r ON p.IDRestaurante = r.IDRestaurante JOIN PedidoGarcomMesa pgm ON p.IDPedido = pgm.IDPedido JOIN GarcomMesa gm ON pgm.GarcomID = gm.GarcomID AND pgm.MesaID = gm.MesaID JOIN Garcom g ON gm.GarcomID = g.GarcomID JOIN Mesa m ON gm.MesaID = m.MesaID;
