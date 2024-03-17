@@ -1,4 +1,4 @@
-import Pedido from "../Modelo/pedido.js"; // Certifique-se de importar a classe Pedido corretamente
+import Pedido from "../Modelo/pedido.js";
 
 export default class PedidoCtrl {
   async gravar(requisicao, resposta) {
@@ -7,10 +7,14 @@ export default class PedidoCtrl {
       const dados = requisicao.body;
       const dataPedido = dados.DataPedido;
       const valorTotal = dados.ValorTotal;
-      const restaurante = dados.restaurante;
+      const restaurante = dados.Restaurante;
+      const garcomMesa = dados.garcomMesa;
 
-      if (dataPedido && valorTotal > 0 && restaurante) {
-        const pedido = new Pedido(0, dataPedido, valorTotal, restaurante);
+      if (dataPedido && valorTotal > 0 && garcomMesa && restaurante) {
+        const garcomID = garcomMesa.GarcomID;
+        const mesaID = garcomMesa.MesaID;
+
+        const pedido = new Pedido(0, dataPedido, valorTotal,restaurante, garcomID, mesaID);
 
         try {
           await pedido.gravar();
@@ -48,15 +52,21 @@ export default class PedidoCtrl {
       const dados = requisicao.body;
       const idPedido = dados.IDPedido;
       const dataPedido = dados.DataPedido;
+      const restaurante = dados.Restaurante;
       const valorTotal = dados.ValorTotal;
-      const restaurante = dados.restaurante;
+      const garcomMesa = dados.garcomMesa;
 
-      if (idPedido && dataPedido && valorTotal > 0 && restaurante) {
+      if (idPedido && dataPedido && valorTotal > 0 && garcomMesa && restaurante) {
+        const garcomID = garcomMesa.GarcomID;
+        const mesaID = garcomMesa.MesaID;
+
         const pedido = new Pedido(
           idPedido,
           dataPedido,
           valorTotal,
-          restaurante
+          restaurante,
+          garcomID,
+          mesaID
         );
 
         try {

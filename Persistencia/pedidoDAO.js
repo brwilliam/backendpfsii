@@ -1,5 +1,5 @@
 import Pedido from "../Modelo/pedido.js";
-import Restaurante from "../Modelo/restaurante.js";
+// import Restaurante from "../Modelo/Restaurante.js";
 import conectar from "./conexao.js";
 
 export default class PedidoDAO {
@@ -12,7 +12,7 @@ export default class PedidoDAO {
     const parametros = [
       pedido.DataPedido,
       pedido.ValorTotal,
-      pedido.Restaurante.IDRestaurante,
+      pedido.Restaurante.IDRestaurante, // Alteração aqui
     ];
 
     try {
@@ -34,7 +34,7 @@ export default class PedidoDAO {
     const parametros = [
       pedido.DataPedido,
       pedido.ValorTotal,
-      pedido.restaurante.IDRestaurante,
+      pedido.Restaurante.IDRestaurante, // Alteração aqui
       pedido.IDPedido,
     ];
 
@@ -103,5 +103,3 @@ export default class PedidoDAO {
 }
 
 }
-
-

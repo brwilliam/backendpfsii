@@ -4,91 +4,82 @@ export default class Pedido {
   #IDPedido;
   #DataPedido;
   #ValorTotal;
-  #GarcomID; // Adicionando GarcomID
-  #MesaID; // Adicionando MesaID
+  #Restaurante;
+  #GarcomID;
+  #MesaID;
 
   constructor(
     IDPedido = 0,
-    DataPedido = '',
+    DataPedido = "",
     ValorTotal = 0,
+    Restaurante = {} ,
     GarcomID = 0,
     MesaID = 0
   ) {
-    this.#IDPedido = IDPedido; // O ID será gerado automaticamente pelo banco de dados
+    this.#IDPedido = IDPedido;
     this.#DataPedido = DataPedido;
     this.#ValorTotal = ValorTotal;
+    this.#Restaurante = Restaurante;
     this.#GarcomID = GarcomID;
     this.#MesaID = MesaID;
   }
 
-  get IDPedido() {
-    return this.#IDPedido;
-  }
+  // Getters e setters 
 
-  set IDPedido(novoIDPedido) {
-    this.#IDPedido = novoIDPedido;
-  }
-
-  get DataPedido() {
-    return this.#DataPedido;
-  }
-
-  set DataPedido(novaDataPedido) {
-    this.#DataPedido = novaDataPedido;
-  }
-
-  get ValorTotal() {
-    return this.#ValorTotal;
-  }
-
-  set ValorTotal(novoValorTotal) {
-    this.#ValorTotal = novoValorTotal;
-  }
-
-  get GarcomID() {
-    return this.#GarcomID;
-  }
-
-  set GarcomID(novoGarcomID) {
-    this.#GarcomID = novoGarcomID;
-  }
-
-  get MesaID() {
-    return this.#MesaID;
-  }
-
-  set MesaID(novaMesaID) {
-    this.#MesaID = novaMesaID;
-  }
-
-  // Método para converter o objeto Pedido em JSON
+  // Método toJSON atualizado 
   toJSON() {
     return {
       IDPedido: this.#IDPedido,
       DataPedido: this.#DataPedido,
       ValorTotal: this.#ValorTotal,
+      Restaurante: this.#Restaurante, 
       GarcomID: this.#GarcomID,
-      MesaID: this.#MesaID
+      MesaID: this.#MesaID,
     };
   }
 
   async gravar() {
     const pedDAO = new PedidoDAO();
-    await pedDAO.gravar(this);
+    try {
+      if (!(this instanceof Pedido)) {
+        throw new Error("O objeto fornecido não é uma instância de Pedido.");
+      }
+      await pedDAO.gravar(this);
+    } catch (error) {
+      throw new Error(`Erro ao gravar pedido no banco de dados: ${error.message}`);
+    }
   }
 
   async excluir() {
     const pedDAO = new PedidoDAO();
-    await pedDAO.excluir(this);
+    try {
+      if (!(this instanceof Pedido)) {
+        throw new Error("O objeto fornecido não é uma instância de Pedido.");
+      }
+      await pedDAO.excluir(this);
+    } catch (error) {
+      throw new Error(`Erro ao excluir pedido no banco de dados: ${error.message}`);
+    }
   }
 
   async atualizar() {
     const pedDAO = new PedidoDAO();
-    await pedDAO.atualizar(this);
+    try {
+      if (!(this instanceof Pedido)) {
+        throw new Error("O objeto fornecido não é uma instância de Pedido.");
+      }
+      await pedDAO.atualizar(this);
+    } catch (error) {
+      throw new Error(`Erro ao atualizar pedido no banco de dados: ${error.message}`);
+    }
   }
 
   async consultar(termo) {
     const pedDAO = new PedidoDAO();
-    return await pedDAO.consultar(termo);
+    try {
+      return await pedDAO.consultar(termo);
+    } catch (error) {
+      throw new Error(`Erro ao consultar pedidos no banco de dados: ${error.message}`);
+    }
   }
 }
