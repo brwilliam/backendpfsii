@@ -32,7 +32,7 @@ app.use(
 // verificarAcesso passa a ser o middleware = camada do meio
 app.use("/login", rotaLogin);
 app.use("/restaurante", verificarAcesso, rotaRestaurante); // Use a rota do restaurante
-app.use("/pedido", verificarAcesso, rotaPedido); // Use a rota do pedido
+app.use("/pedido", rotaPedido); // Use a rota do pedido
 app.use("/garcom",verificarAcesso, rotaGarcom);
 app.use("/pedido-garcom-mesa",verificarAcesso, rotaPedidoGarcomMesa); // Adicione a rota do pedido garcom mesa
 

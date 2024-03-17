@@ -4,18 +4,21 @@ export default class Pedido {
   #IDPedido;
   #DataPedido;
   #ValorTotal;
-  #restaurante; // o pedido é um objeto do restaurante
+  #GarcomID; // Adicionando GarcomID
+  #MesaID; // Adicionando MesaID
 
   constructor(
-    IDPedido=0,
+    IDPedido = 0,
     DataPedido = '',
     ValorTotal = 0,
-    restaurante ={}
+    GarcomID = 0,
+    MesaID = 0
   ) {
     this.#IDPedido = IDPedido; // O ID será gerado automaticamente pelo banco de dados
     this.#DataPedido = DataPedido;
     this.#ValorTotal = ValorTotal;
-    this.#restaurante = restaurante;
+    this.#GarcomID = GarcomID;
+    this.#MesaID = MesaID;
   }
 
   get IDPedido() {
@@ -42,12 +45,20 @@ export default class Pedido {
     this.#ValorTotal = novoValorTotal;
   }
 
-  get restaurante() {
-    return this.#restaurante;
+  get GarcomID() {
+    return this.#GarcomID;
   }
 
-  set restaurante(novoRestaurante) {
-    this.#restaurante = novoRestaurante;
+  set GarcomID(novoGarcomID) {
+    this.#GarcomID = novoGarcomID;
+  }
+
+  get MesaID() {
+    return this.#MesaID;
+  }
+
+  set MesaID(novaMesaID) {
+    this.#MesaID = novaMesaID;
   }
 
   // Método para converter o objeto Pedido em JSON
@@ -56,7 +67,8 @@ export default class Pedido {
       IDPedido: this.#IDPedido,
       DataPedido: this.#DataPedido,
       ValorTotal: this.#ValorTotal,
-      restaurante: this.#restaurante
+      GarcomID: this.#GarcomID,
+      MesaID: this.#MesaID
     };
   }
 

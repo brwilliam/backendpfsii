@@ -1,6 +1,6 @@
 import PedidoDAO from "../Persistencia/pedidoDAO.js";
 
-export class GarcomMesa {
+export default class GarcomMesa {
   #garcomID;
   #mesaID;
   #dataAtendimento;

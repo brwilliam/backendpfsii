@@ -4,14 +4,6 @@ CREATE TABLE Restaurante (
     NomeRestaurante VARCHAR(100) NOT NULL
 );
 
--- Criação da tabela Pedido
-CREATE TABLE Pedido (
-    IDPedido INT AUTO_INCREMENT PRIMARY KEY,
-    DataPedido DATE NOT NULL,
-    ValorTotal DECIMAL(15, 2) NOT NULL,
-    IDRestaurante INT NOT NULL,
-    FOREIGN KEY (IDRestaurante) REFERENCES Restaurante(IDRestaurante)
-);
 
 -- Criação das tabelas relações muitos para muitos
 
@@ -38,8 +30,21 @@ CREATE TABLE GarcomMesa (
   FOREIGN KEY (MesaID) REFERENCES Mesa(MesaID)
 );
 
--- Criação da tabela de relacionamento Pedido_GarcomMesa
-CREATE TABLE Pedido_GarcomMesa (
+-- Criação da tabela Pedido
+CREATE TABLE Pedido (
+    IDPedido INT AUTO_INCREMENT PRIMARY KEY,
+    DataPedido DATE NOT NULL,
+    ValorTotal DECIMAL(15, 2) NOT NULL,
+    IDRestaurante INT NOT NULL,
+    GarcomID INT NOT NULL, -- Adicionando a coluna GarcomID
+    MesaID INT NOT NULL, -- Adicionando a coluna MesaID
+    FOREIGN KEY (IDRestaurante) REFERENCES Restaurante(IDRestaurante),
+    FOREIGN KEY (GarcomID, MesaID) REFERENCES GarcomMesa(GarcomID, MesaID) -- Chave estrangeira para GarcomMesa
+);
+
+
+-- Criar a tabela de relacionamento Pedido_GarcomMesa
+CREATE TABLE PedidoGarcomMesa (
     IDPedido INT,
     GarcomID INT,
     MesaID INT,
@@ -47,6 +52,7 @@ CREATE TABLE Pedido_GarcomMesa (
     FOREIGN KEY (IDPedido) REFERENCES Pedido(IDPedido),
     FOREIGN KEY (GarcomID, MesaID) REFERENCES GarcomMesa(GarcomID, MesaID)
 );
+
 
 --SCRIPT DE CONSULTA COM IDpedido/Restaurante/numMesa/NomeGarcom/data/valor
 
