@@ -5,26 +5,76 @@ export default class Pedido {
   #DataPedido;
   #ValorTotal;
   #Restaurante;
-  #GarcomID;
-  #MesaID;
+  #Garcom;
+  #Mesa;
 
   constructor(
     IDPedido = 0,
     DataPedido = "",
     ValorTotal = 0,
     Restaurante = {} ,
-    GarcomID = 0,
-    MesaID = 0
+    Garcom = {},
+    Mesa = {}
   ) {
     this.#IDPedido = IDPedido;
     this.#DataPedido = DataPedido;
     this.#ValorTotal = ValorTotal;
     this.#Restaurante = Restaurante;
-    this.#GarcomID = GarcomID;
-    this.#MesaID = MesaID;
+    this.#Garcom = Garcom;
+    this.#Mesa = Mesa;
   }
 
   // Getters e setters 
+   // Getters
+ get IDPedido() {
+  return this.#IDPedido;
+}
+
+get DataPedido() {
+  return this.#DataPedido;
+}
+
+get ValorTotal() {
+  return this.#ValorTotal;
+}
+
+get Restaurante() {
+  return this.#Restaurante;
+}
+
+get Garcom() {
+  return this.#Garcom;
+}
+
+get Mesa() {
+  return this.#Mesa;
+}
+
+// Setters
+set IDPedido(value) {
+  this.#IDPedido = value;
+}
+
+set DataPedido(value) {
+  this.#DataPedido = value;
+}
+
+set ValorTotal(value) {
+  this.#ValorTotal = value;
+}
+
+set Restaurante(value) {
+  this.#Restaurante = value;
+}
+
+set Garcom(value) {
+  this.#Garcom = value;
+}
+
+set Mesa(value) {
+  this.#Mesa = value;
+}
+
 
   // Método toJSON atualizado 
   toJSON() {
@@ -33,8 +83,8 @@ export default class Pedido {
       DataPedido: this.#DataPedido,
       ValorTotal: this.#ValorTotal,
       Restaurante: this.#Restaurante, 
-      GarcomID: this.#GarcomID,
-      MesaID: this.#MesaID,
+      Garcom: this.#Garcom,
+      Mesa: this.#Mesa,
     };
   }
 

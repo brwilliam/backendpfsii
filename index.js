@@ -28,11 +28,13 @@ app.use(
   })
 );
 
+//verificarAcesso
+
 // verificarAcesso passa a ser o middleware = camada do meio
 app.use("/login", rotaLogin);
-app.use("/restaurante", verificarAcesso, rotaRestaurante); // Use a rota do restaurante
+app.use("/restaurante", rotaRestaurante); // Use a rota do restaurante
 app.use("/pedido", rotaPedido); // Use a rota do pedido
-app.use("/garcom",verificarAcesso, rotaGarcom);
+app.use("/garcom", rotaGarcom);
 
 app.listen(porta, host, () => {
   console.log(`Servidor escutando na porta ${host}:${porta}.`);

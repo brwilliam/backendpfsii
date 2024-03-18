@@ -5,13 +5,13 @@ export default class PedidoGarcomMesaCtrl {
     resposta.type("application/json");
     if (requisicao.method === "POST" && requisicao.is("application/json")) {
       const dados = requisicao.body;
-      const idGarcom = dados.idGarcom;
+      const GarcomId = dados.GarcomId;
       const idMesa = dados.idMesa;
       const dataAtendimento = dados.dataAtendimento;
 
-      if (idGarcom && idMesa && dataAtendimento) {
+      if (GarcomId && idMesa && dataAtendimento) {
         const pedidoGarcomMesa = {
-          idGarcom: idGarcom,
+          GarcomId: GarcomId,
           idMesa: idMesa,
           dataAtendimento: dataAtendimento
         };

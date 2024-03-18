@@ -2,24 +2,24 @@ import RestauranteDAO from "../Persistencia/restauranteDAO.js";
 
 export default class Restaurante {
   // Definição dos atributos privados
-  #IDRestaurante;
+  #RestauranteID;
   #NomeRestaurante;
 
   constructor(
-    IDRestaurante = 0,
+    RestauranteID = 0,
     NomeRestaurante = ""
   ) {
-    this.#IDRestaurante = IDRestaurante;
+    this.#RestauranteID = RestauranteID;
     this.#NomeRestaurante = NomeRestaurante;
   }
 
   // Métodos de acesso públicos
-  get IDRestaurante() {
-    return this.#IDRestaurante;
+  get RestauranteID() {
+    return this.#RestauranteID;
   }
 
-  set IDRestaurante(novoID) {
-    this.#IDRestaurante = novoID;
+  set RestauranteID(novoID) {
+    this.#RestauranteID = novoID;
   }
 
   get NomeRestaurante() {
@@ -33,7 +33,7 @@ export default class Restaurante {
   // Método para converter o objeto Restaurante em JSON
   toJSON() {
     return {
-      IDRestaurante: this.#IDRestaurante,
+      RestauranteID: this.#RestauranteID,
       NomeRestaurante: this.#NomeRestaurante
     };
   }

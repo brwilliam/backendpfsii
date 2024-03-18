@@ -16,7 +16,7 @@ export default class GarcomDAO {
     try {
       const conexao = await conectar();
       const resultado = await conexao.execute(sql, parametros);
-      garcom.garcomID = resultado[0].insertId;
+      garcom.GarcomId = resultado[0].insertId;
       global.poolConexoes.releaseConnection(conexao);
     } catch (error) {
       throw new Error(`Erro ao gravar garçom no banco de dados: ${error.message}`);
@@ -28,11 +28,11 @@ export default class GarcomDAO {
       throw new Error('O objeto fornecido não é uma instância de Garcom.');
     }
 
-    const sql = `UPDATE Garcom SET Nome = ?, Telefone = ? WHERE GarcomID = ?`;
+    const sql = `UPDATE Garcom SET Nome = ?, Telefone = ? WHERE GarcomId = ?`;
     const parametros = [
       garcom.nome,
       garcom.telefone,
-      garcom.garcomID
+      garcom.GarcomId
     ];
 
     try {
@@ -44,9 +44,9 @@ export default class GarcomDAO {
     }
   }
 
-  async excluir(garcomID) {
-    const sql = `DELETE FROM Garcom WHERE GarcomID = ?`;
-    const parametros = [garcomID];
+  async excluir(GarcomId) {
+    const sql = `DELETE FROM Garcom WHERE GarcomId = ?`;
+    const parametros = [GarcomId];
 
     try {
       const conexao = await conectar();
@@ -69,7 +69,7 @@ export default class GarcomDAO {
       const [registros] = await conexao.execute(sql, parametros);
 
       const listaGarcons = registros.map(registro => {
-        return new Garcom(registro.GarcomID, registro.Nome, registro.Telefone);
+        return new Garcom(registro.GarcomId, registro.Nome, registro.Telefone);
       });
 
       return listaGarcons;

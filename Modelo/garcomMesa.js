@@ -1,22 +1,22 @@
-import PedidoDAO from "../Persistencia/pedidoDAO.js";
+import GarcomMesaDAO from "../Persistencia/garcomMesaDAO.js";
 
 export default class GarcomMesa {
-  #garcomID;
+  #GarcomId;
   #mesaID;
   #dataAtendimento;
 
   constructor(garcomID = 0, mesaID = 0, dataAtendimento = '') {
-    this.#garcomID = garcomID;
+    this.#GarcomId = garcomID;
     this.#mesaID = mesaID;
     this.#dataAtendimento = dataAtendimento;
   }
 
   get garcomID() {
-    return this.#garcomID;
+    return this.#GarcomId;
   }
 
   set garcomID(novoGarcomID) {
-    this.#garcomID = novoGarcomID;
+    this.#GarcomId = novoGarcomID;
   }
 
   get mesaID() {
@@ -38,29 +38,29 @@ export default class GarcomMesa {
   // Método para converter o objeto GarcomMesa em JSON
   toJSON() {
     return {
-      garcomID: this.#garcomID,
+      garcomID: this.#GarcomId,
       mesaID: this.#mesaID,
       dataAtendimento: this.#dataAtendimento
     };
   }
 
   async gravar() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.gravarGarcomMesa(this.toJSON());
+    const pedDAO = new GarcomMesaDAO();
+    await pedDAO.gravar(this.toJSON());
   }
 
   async excluir() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.excluirGarcomMesa(this.#garcomID, this.#mesaID);
+    const pedDAO = new GarcomMesaDAO();
+    await pedDAO.excluir(this.#GarcomId, this.#mesaID);
   }
 
   async atualizar() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.atualizarGarcomMesa(this.#garcomID, this.#mesaID, this.toJSON());
+    const pedDAO = new GarcomMesaDAO();
+    await pedDAO.atualizar(this.#GarcomId, this.#mesaID, this.toJSON());
   }
 
   async consultar(termo) {
-    const pedDAO = new PedidoDAO();
-    return await pedDAO.consultarGarcomMesa(termo);
+    const pedDAO = new GarcomMesaDAO();
+    return await pedDAO.consultar(termo);
   }
 }

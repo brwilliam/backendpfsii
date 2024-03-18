@@ -1,10 +1,10 @@
 import conectar from "./conexao.js";
 
 export default class GarcomMesaDAO {
-  async adicionar(garcomMesa) {
-    const sql = `INSERT INTO Garcom_Mesa (GarcomID, MesaID, DataAtendimento) VALUES (?, ?, ?)`;
+  async gravar(garcomMesa) {
+    const sql = `INSERT INTO Garcom_Mesa (GarcomId, MesaID, DataAtendimento) VALUES (?, ?, ?)`;
     const parametros = [
-      garcomMesa.garcomID,
+      garcomMesa.GarcomId,
       garcomMesa.mesaID,
       garcomMesa.dataAtendimento,
     ];
@@ -18,9 +18,9 @@ export default class GarcomMesaDAO {
     }
   }
 
-  async remover(garcomMesa) {
-    const sql = `DELETE FROM Garcom_Mesa WHERE GarcomID = ? AND MesaID = ?`;
-    const parametros = [garcomMesa.garcomID, garcomMesa.mesaID];
+  async excluir(garcomMesa) {
+    const sql = `DELETE FROM Garcom_Mesa WHERE GarcomId = ? AND MesaID = ?`;
+    const parametros = [garcomMesa.GarcomId, garcomMesa.mesaID];
 
     try {
       const conexao = await conectar();
@@ -31,9 +31,9 @@ export default class GarcomMesaDAO {
     }
   }
 
-  async consultarMesasDoGarcom(garcomID) {
-    const sql = `SELECT * FROM Garcom_Mesa WHERE GarcomID = ?`;
-    const parametros = [garcomID];
+  async consultarMesasDoGarcom(GarcomId) {
+    const sql = `SELECT * FROM Garcom_Mesa WHERE GarcomId = ?`;
+    const parametros = [GarcomId];
 
     try {
       const conexao = await conectar();

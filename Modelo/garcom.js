@@ -1,22 +1,23 @@
-import PedidoDAO from "../Persistencia/pedidoDAO.js";
+// Importação da classe GarcomDAO
+import GarcomDAO from "../Persistencia/garcomDAO.js";
 
 export default class Garcom {
-  #garcomID;
+  #GarcomId;
   #nome;
   #telefone;
 
-  constructor(garcomID = 0, nome = '', telefone = '') {
-    this.#garcomID = garcomID;
+  constructor(GarcomId = 0, nome = '', telefone = '') {
+    this.#GarcomId = GarcomId;
     this.#nome = nome;
     this.#telefone = telefone;
   }
 
-  get garcomID() {
-    return this.#garcomID;
+  get GarcomId() {
+    return this.#GarcomId;
   }
 
-  set garcomID(novoGarcomID) {
-    this.#garcomID = novoGarcomID;
+  set GarcomId(novoGarcomID) {
+    this.#GarcomId = novoGarcomID;
   }
 
   get nome() {
@@ -38,29 +39,39 @@ export default class Garcom {
   // Método para converter o objeto Garcom em JSON
   toJSON() {
     return {
-      garcomID: this.#garcomID,
+      garcomID: this.#GarcomId,
       nome: this.#nome,
       telefone: this.#telefone
     };
   }
 
   async gravar() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.gravar(this.toJSON());
+    const garcomDAO = new GarcomDAO();
+    try {
+      await garcomDAO.gravar(this.toJSON());
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
   async excluir() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.excluir(this.#garcomID);
+    const garcomDAO = new GarcomDAO();
+    try {
+      await garcomDAO.excluir(this.#GarcomId);
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
   async atualizar() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.atualizar(this.#garcomID, this.toJSON());
-  }
+    
+    const garcomDAO = new GarcomDAO();
+    try {
+      
+      await garcomDAO.atualizar(this.#GarcomId, this.toJSON());
+    } catch (error) {
 
-  async consultar(termo) {
-    const pedDAO = new PedidoDAO();
-    return await pedDAO.consultar(termo);
+      console.error(error.message);
+    }
   }
 }

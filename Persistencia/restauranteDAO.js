@@ -11,7 +11,7 @@ export default class RestauranteDAO {
       ];
       const conexao = await conectar();
       const retorno = await conexao.execute(sql, parametros);
-      restaurante.IDRestaurante = retorno[0].insertId;
+      restaurante.RestauranteID = retorno[0].insertId;
       global.poolConexoes.releaseConnection(conexao);
     }
   }
@@ -22,7 +22,7 @@ export default class RestauranteDAO {
         "UPDATE Restaurante SET NomeRestaurante = ? WHERE IDRestaurante = ?";
       const parametros = [
         restaurante.NomeRestaurante,
-        restaurante.IDRestaurante,
+        restaurante.RestauranteID,
       ];
       const conexao = await conectar();
       await conexao.execute(sql, parametros);
@@ -64,7 +64,7 @@ export default class RestauranteDAO {
 
     for (const registro of registros) {
       const restaurante = new Restaurante(
-        registro.IDRestaurante,
+        registro.RestauranteID,
         registro.NomeRestaurante
       );
       listaRestaurantes.push(restaurante);

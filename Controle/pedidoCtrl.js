@@ -1,4 +1,5 @@
 import Pedido from "../Modelo/pedido.js";
+import GarcomMesa from "../Modelo/garcomMesa.js";
 
 export default class PedidoCtrl {
   async gravar(requisicao, resposta) {
@@ -7,14 +8,14 @@ export default class PedidoCtrl {
       const dados = requisicao.body;
       const dataPedido = dados.DataPedido;
       const valorTotal = dados.ValorTotal;
-      const restaurante = dados.Restaurante;
-      const garcomMesa = dados.garcomMesa;
+      const restauranteID = dados.Restaurante;
+      const garcomMesa = dados.GarcomMesa; // Corrigido para GarcomMesa
 
-      if (dataPedido && valorTotal > 0 && garcomMesa && restaurante) {
-        const garcomID = garcomMesa.GarcomID;
-        const mesaID = garcomMesa.MesaID;
+      if (dataPedido && valorTotal > 0 && garcomMesa && restauranteID) {
+        const GarcomId = garcomMesa.GarcomId;
+        const MesaId = garcomMesa.MesaId;
 
-        const pedido = new Pedido(0, dataPedido, valorTotal,restaurante, garcomID, mesaID);
+        const pedido = new Pedido(0, dataPedido, valorTotal, restauranteID, GarcomId, MesaId);
 
         try {
           await pedido.gravar();
@@ -42,6 +43,9 @@ export default class PedidoCtrl {
       });
     }
   }
+
+
+
 
   async atualizar(requisicao, resposta) {
     resposta.type("application/json");
@@ -101,7 +105,7 @@ export default class PedidoCtrl {
     resposta.type("application/json");
     if (requisicao.method === "DELETE" && requisicao.is("application/json")) {
       const dados = requisicao.body;
-      const idPedido = dados.IDPedido;
+      const idPedido = dados.PedidoID;
 
       if (idPedido) {
         const pedido = new Pedido(idPedido);
