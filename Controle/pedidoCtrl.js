@@ -1,5 +1,4 @@
 import Pedido from "../Modelo/pedido.js";
-import GarcomMesa from "../Modelo/garcomMesa.js";
 
 export default class PedidoCtrl {
   async gravar(requisicao, resposta) {
@@ -9,13 +8,13 @@ export default class PedidoCtrl {
       const dataPedido = dados.DataPedido;
       const valorTotal = dados.ValorTotal;
       const restauranteID = dados.Restaurante;
-      const garcomMesa = dados.GarcomMesa; // Corrigido para GarcomMesa
+      const garcomMesa = dados.GarcomMesa;
 
-      if (dataPedido && valorTotal > 0 && garcomMesa && restauranteID) {
-        const GarcomId = garcomMesa.GarcomId;
-        const MesaId = garcomMesa.MesaId;
+      if (dataPedido && valorTotal > 0 && restauranteID && garcomMesa) {
+        const garcomId = garcomMesa.GarcomId;
+        const mesaId = garcomMesa.MesaId;
 
-        const pedido = new Pedido(0, dataPedido, valorTotal, restauranteID, GarcomId, MesaId);
+        const pedido = new Pedido(0, dataPedido, valorTotal, restauranteID, garcomId, mesaId);
 
         try {
           await pedido.gravar();
@@ -33,18 +32,17 @@ export default class PedidoCtrl {
         resposta.status(400).json({
           status: false,
           mensagem:
-            "Por favor, forneça os dados do pedido conforme a documentação da API!",
+            "Por favor, forneça os dados completos do pedido conforme a documentação da API!",
         });
       }
     } else {
       resposta.status(400).json({
         status: false,
-        mensagem: "Por favor, utilize o método POST para cadastrar um pedido!",
+        mensagem:
+          "Por favor, utilize o método POST e forneça um conteúdo JSON para cadastrar um pedido!",
       });
     }
   }
-
-
 
 
   async atualizar(requisicao, resposta) {
@@ -61,8 +59,8 @@ export default class PedidoCtrl {
       const garcomMesa = dados.garcomMesa;
 
       if (idPedido && dataPedido && valorTotal > 0 && garcomMesa && restaurante) {
-        const garcomID = garcomMesa.GarcomID;
-        const mesaID = garcomMesa.MesaID;
+        const garcomID = garcomMesa.GarcomId;
+        const mesaID = garcomMesa.MesaId;
 
         const pedido = new Pedido(
           idPedido,

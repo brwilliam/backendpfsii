@@ -1,4 +1,5 @@
-import Garcom from "../Modelo/garcom.js";
+// import Garcom from "../Modelo/garcom.js";
+// import Pedido from "../Modelo/pedido.js";
 import conectar from "../Persistencia/conexao.js";
 
 export default class GarcomCtrl {
@@ -47,13 +48,13 @@ export default class GarcomCtrl {
       requisicao.is("application/json")
     ) {
       const dados = requisicao.body;
-      const idGarcom = dados.idGarcom;
+      const GarcomId = dados.GarcomId;
       const nome = dados.nome;
       const telefone = dados.telefone;
 
-      if (idGarcom && nome && telefone) {
+      if (GarcomId && nome && telefone) {
         const garcom = new Garcom(nome, telefone);
-        garcom.garcomID = idGarcom;
+        garcom.GarcomId = GarcomId;
 
         try {
           const conexao = await conectar();
@@ -91,11 +92,11 @@ export default class GarcomCtrl {
       requisicao.is("application/json")
     ) {
       const dados = requisicao.body;
-      const idGarcom = dados.idGarcom;
+      const GarcomId = dados.GarcomId;
 
-      if (idGarcom) {
+      if (GarcomId) {
         const garcom = new Garcom();
-        garcom.garcomID = idGarcom;
+        garcom.GarcomId = GarcomId;
 
         try {
           const conexao = await conectar();

@@ -1,4 +1,4 @@
-import Restaurante from "../Modelo/Restaurante.js";
+import Restaurante from "../Modelo/restaurante.js";
 import conectar from "./conexao.js";
 
 export default class RestauranteDAO {
@@ -19,7 +19,7 @@ export default class RestauranteDAO {
   async atualizar(restaurante) {
     if (restaurante instanceof Restaurante) {
       const sql =
-        "UPDATE Restaurante SET NomeRestaurante = ? WHERE IDRestaurante = ?";
+        "UPDATE Restaurante SET NomeRestaurante = ? WHERE RestauranteID = ?";
       const parametros = [
         restaurante.NomeRestaurante,
         restaurante.RestauranteID,
@@ -32,8 +32,8 @@ export default class RestauranteDAO {
 
   async excluir(restaurante) {
     if (restaurante instanceof Restaurante) {
-      const sql = "DELETE FROM Restaurante WHERE IDRestaurante = ?";
-      const parametros = [restaurante.IDRestaurante];
+      const sql = "DELETE FROM Restaurante WHERE RestauranteID = ?";
+      const parametros = [restaurante.RestauranteID];
       const conexao = await conectar();
       await conexao.execute(sql, parametros);
       global.poolConexoes.releaseConnection(conexao);

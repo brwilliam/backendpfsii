@@ -2,7 +2,7 @@ import conectar from "./conexao.js";
 
 export default class GarcomMesaDAO {
   async gravar(garcomMesa) {
-    const sql = `INSERT INTO Garcom_Mesa (GarcomId, MesaID, DataAtendimento) VALUES (?, ?, ?)`;
+    const sql = `INSERT INTO GarcomMesa (GarcomId, MesaID, DataAtendimento) VALUES (?, ?, ?)`;
     const parametros = [
       garcomMesa.GarcomId,
       garcomMesa.mesaID,
@@ -19,7 +19,7 @@ export default class GarcomMesaDAO {
   }
 
   async excluir(garcomMesa) {
-    const sql = `DELETE FROM Garcom_Mesa WHERE GarcomId = ? AND MesaID = ?`;
+    const sql = `DELETE FROM GarcomMesa WHERE GarcomId = ? AND MesaID = ?`;
     const parametros = [garcomMesa.GarcomId, garcomMesa.mesaID];
 
     try {

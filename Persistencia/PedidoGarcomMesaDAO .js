@@ -5,8 +5,8 @@ export default class PedidoGarcomMesaDAO {
     const sql = `INSERT INTO PedidoGarcomMesa (PedidoID, GarcomId, MesaId, DataAtendimento) VALUES (?, ?, ?, ?)`;
     const parametros = [
       dadosPedidoGarcomMesa.PedidoID,
-      dadosPedidoGarcomMesa.Garcomid,
-      dadosPedidoGarcomMesa.idMesa,
+      dadosPedidoGarcomMesa.GarcomId,
+      dadosPedidoGarcomMesa.MesaId,
       dadosPedidoGarcomMesa.dataAtendimento
     ];
 

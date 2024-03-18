@@ -45,22 +45,22 @@ export default class Mesa {
   }
 
   async gravar() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.gravar(this.toJSON());
+    const mesaDAO = new PedidoDAO();
+    await mesaDAO.gravar(this.toJSON());
   }
 
   async excluir() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.excluir(this.#mesaID);
+    const mesaDAO = new PedidoDAO();
+    await mesaDAO.excluir(this.#mesaID);
   }
 
   async atualizar() {
-    const pedDAO = new PedidoDAO();
-    await pedDAO.atualizar(this.#mesaID, this.toJSON());
+    const mesaDAO = new PedidoDAO();
+    await mesaDAO.atualizar(this.#mesaID, this.toJSON());
   }
 
   async consultar(termo) {
-    const pedDAO = new PedidoDAO();
-    return await pedDAO.consultar(termo);
+    const mesaDAO = new PedidoDAO();
+    await mesaDAO.consultar(termo);
   }
 }

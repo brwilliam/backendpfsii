@@ -19,8 +19,7 @@ export default class GarcomDAO {
       garcom.GarcomId = resultado[0].insertId;
       global.poolConexoes.releaseConnection(conexao);
     } catch (error) {
-      throw new Error(`Erro ao gravar garçom no banco de dados: ${error.message}`);
-    }
+      throw error  }
   }
 
   async atualizar(garcom) {

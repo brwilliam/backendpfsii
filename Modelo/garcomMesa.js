@@ -5,8 +5,8 @@ export default class GarcomMesa {
   #mesaID;
   #dataAtendimento;
 
-  constructor(garcomID = 0, mesaID = 0, dataAtendimento = '') {
-    this.#GarcomId = garcomID;
+  constructor(GarcomId = 0, mesaID = 0, dataAtendimento = '') {
+    this.#GarcomId = GarcomId;
     this.#mesaID = mesaID;
     this.#dataAtendimento = dataAtendimento;
   }
@@ -45,22 +45,22 @@ export default class GarcomMesa {
   }
 
   async gravar() {
-    const pedDAO = new GarcomMesaDAO();
-    await pedDAO.gravar(this.toJSON());
+    const gmDAO = new GarcomMesaDAO();
+    await gmDAO.gravar(this);
   }
 
   async excluir() {
-    const pedDAO = new GarcomMesaDAO();
-    await pedDAO.excluir(this.#GarcomId, this.#mesaID);
+    const gmDAO = new GarcomMesaDAO();
+    await gmDAO.excluir(this);
   }
 
   async atualizar() {
-    const pedDAO = new GarcomMesaDAO();
-    await pedDAO.atualizar(this.#GarcomId, this.#mesaID, this.toJSON());
+    const gmDAO = new GarcomMesaDAO();
+    await gmDAO.atualizar(this);
   }
 
   async consultar(termo) {
-    const pedDAO = new GarcomMesaDAO();
-    return await pedDAO.consultar(termo);
+    const gmDAO = new GarcomMesaDAO();
+    return await gmDAO.consultar(termo);
   }
 }

@@ -48,7 +48,7 @@ export default class Garcom {
   async gravar() {
     const garcomDAO = new GarcomDAO();
     try {
-      await garcomDAO.gravar(this.toJSON());
+      await garcomDAO.gravar(this);
     } catch (error) {
       console.error(error.message);
     }
@@ -57,7 +57,7 @@ export default class Garcom {
   async excluir() {
     const garcomDAO = new GarcomDAO();
     try {
-      await garcomDAO.excluir(this.#GarcomId);
+      await garcomDAO.excluir(this);
     } catch (error) {
       console.error(error.message);
     }
@@ -68,7 +68,7 @@ export default class Garcom {
     const garcomDAO = new GarcomDAO();
     try {
       
-      await garcomDAO.atualizar(this.#GarcomId, this.toJSON());
+      await garcomDAO.atualizar(this);
     } catch (error) {
 
       console.error(error.message);

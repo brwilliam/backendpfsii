@@ -1,14 +1,14 @@
-import PedidoGarcomMesaDAO from "../Persistencia/pedidoGarcomMesaDAO.js";
+import PedidoGarcomMesaDAO from "../Persistencia/PedidoGarcomMesaDAO.js";
 
 export default class PedidoGarcomMesa {
   #idPedido;
-  #idGarcom;
+  #GarcomId;
   #idMesa;
   #dataAtendimento;
 
-  constructor(idPedido = 0, idGarcom = 0, idMesa = 0, dataAtendimento = new Date()) {
+  constructor(GarcomId = 0, idGarcom = 0, idMesa = 0, dataAtendimento = new Date()) {
     this.#idPedido = idPedido;
-    this.#idGarcom = idGarcom;
+    this.#GarcomId = GarcomId;
     this.#idMesa = idMesa;
     this.#dataAtendimento = dataAtendimento;
   }
@@ -22,11 +22,11 @@ export default class PedidoGarcomMesa {
   }
 
   get idGarcom() {
-    return this.#idGarcom;
+    return this.#GarcomId;
   }
 
   set idGarcom(newIdGarcom) {
-    this.#idGarcom = newIdGarcom;
+    this.#GarcomId = newIdGarcom;
   }
 
   get idMesa() {
@@ -46,30 +46,30 @@ export default class PedidoGarcomMesa {
   }
 
   async gravar() {
-    const pedidoDAO = new PedidoDAO();
-    await pedidoDAO.gravar(this.toJSON());
+    const pgmDAO = new PedidoGarcomMesaDAO();
+    await pgmDAO.gravar(this.toJSON());
   }
 
   async excluir() {
-    const pedidoDAO = new PedidoDAO();
-    await pedidoDAO.excluir(this.#idPedido);
+    const pgmDAO = new PedidoGarcomMesaDAO();
+    await pgmDAO.excluir(this.#idPedido);
   }
 
   async atualizar() {
-    const pedidoDAO = new PedidoDAO();
-    await pedidoDAO.atualizar(this.#idPedido, this.toJSON());
+    const pgmDAO = new PedidoGarcomMesaDAO();
+    await pgmDAO.atualizar(this.#idPedido, this.toJSON());
   }
 
   async consultar(termo) {
-    const pedidoDAO = new PedidoDAO();
-    return await pedidoDAO.consultar(termo);
+    const pgmDAO = new PedidoGarcomMesaDAO();
+    return await pgmDAO.consultar(termo);
   }
 
   // Método para converter o objeto PedidoGarcomMesa em JSON
   toJSON() {
     return {
       idPedido: this.#idPedido,
-      idGarcom: this.#idGarcom,
+      idGarcom: this.#GarcomId,
       idMesa: this.#idMesa,
       dataAtendimento: this.#dataAtendimento
     };
