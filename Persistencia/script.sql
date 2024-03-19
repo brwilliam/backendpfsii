@@ -14,7 +14,6 @@ CREATE TABLE Garcom (
 -- Criação da tabela Mesa
 CREATE TABLE Mesa (
     MesaId INT AUTO_INCREMENT PRIMARY KEY,
-    Numero INT NOT NULL,
     Capacidade INT NOT NULL
 );
 
