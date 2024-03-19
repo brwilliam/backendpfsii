@@ -1,66 +1,57 @@
-import PedidoDAO from "../Persistencia/pedidoDAO.js";
+import MesaDAO from "../Persistencia/mesaDAO.js";
 
 export default class Mesa {
-  #mesaID;
-  #numero;
-  #capacidade;
+  #MesaId;
+  #Capacidade;
 
-  constructor(mesaID = 0, numero = '', capacidade = 0) {
-    this.#mesaID = mesaID; // O ID será gerado automaticamente pelo banco de dados
-    this.#numero = numero;
-    this.#capacidade = capacidade;
+  constructor(MesaId = 0, Capacidade = 0) {
+    this.#MesaId = MesaId;
+    this.#Capacidade = Capacidade;
   }
 
-  get mesaID() {
-    return this.#mesaID;
+  get MesaId() {
+    return this.#MesaId;
   }
 
-  set mesaID(novoMesaID) {
-    this.#mesaID = novoMesaID;
+  set MesaId(newId) {
+    this.#MesaId = newId;
   }
 
-  get numero() {
-    return this.#numero;
+
+
+  get Capacidade() {
+    return this.#Capacidade;
   }
 
-  set numero(novoNumero) {
-    this.#numero = novoNumero;
+  set Capacidade(newCapacidade) {
+    this.#Capacidade = newCapacidade;
   }
 
-  get capacidade() {
-    return this.#capacidade;
-  }
-
-  set capacidade(novaCapacidade) {
-    this.#capacidade = novaCapacidade;
-  }
-
-  // Método para converter o objeto Mesa em JSON
   toJSON() {
     return {
-      mesaID: this.#mesaID,
-      numero: this.#numero,
-      capacidade: this.#capacidade
+      mesaId: this.#MesaId,
+      capacidade: this.#Capacidade
     };
-  }
+  // Método para converter o objeto Mesa em JSON
 
+  }
   async gravar() {
-    const mesaDAO = new PedidoDAO();
+    const mesaDAO = new MesaDAO();
     await mesaDAO.gravar(this.toJSON());
   }
 
   async excluir() {
-    const mesaDAO = new PedidoDAO();
-    await mesaDAO.excluir(this.#mesaID);
-  }
+    const mesaDAO = new MesaDAO();
+    await mesaDAO.excluir(this.#MesaId);
 
+  }
   async atualizar() {
-    const mesaDAO = new PedidoDAO();
-    await mesaDAO.atualizar(this.#mesaID, this.toJSON());
+    const mesaDAO = new MesaDAO();
+    await mesaDAO.atualizar(this.MesaId, this.toJSON());
   }
 
   async consultar(termo) {
-    const mesaDAO = new PedidoDAO();
+    const mesaDAO = new MesaDAO();
     await mesaDAO.consultar(termo);
   }
 }

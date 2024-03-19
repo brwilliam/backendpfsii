@@ -1,4 +1,4 @@
-import Restaurante from "../Modelo/restaurante.js";
+import Restaurante from "../Modelo/Restaurante.js";
 import conectar from "./conexao.js";
 
 export default class RestauranteDAO {

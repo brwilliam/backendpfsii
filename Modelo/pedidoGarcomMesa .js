@@ -1,5 +1,4 @@
 import PedidoGarcomMesaDAO from "../Persistencia/PedidoGarcomMesaDAO.js";
-
 export default class PedidoGarcomMesa {
   #idPedido;
   #GarcomId;
@@ -13,51 +12,55 @@ export default class PedidoGarcomMesa {
     this.#dataAtendimento = dataAtendimento;
   }
 
+  get pedidoId() {
+    return this.#idPedido;
+  }
+
+  set id(newId) {
+    this.#idPedido = newId;
+  }
+
   get idPedido() {
     return this.#idPedido;
   }
 
-  set idPedido(newIdPedido) {
-    this.#idPedido = newIdPedido;
-  }
-
-  get idGarcom() {
+  get garcomId_() {
     return this.#GarcomId;
   }
 
-  set idGarcom(newIdGarcom) {
-    this.#GarcomId = newIdGarcom;
+  set garcomId(newGarcomId) {
+    this.#GarcomId = newGarcomId;
   }
 
-  get idMesa() {
+  get mesaId() {
     return this.#idMesa;
   }
 
-  set idMesa(newIdMesa) {
-    this.#idMesa = newIdMesa;
+  set mesaId(newMesaId) {
+    this.#idMesa = newMesaId;
   }
 
   get dataAtendimento() {
     return this.#dataAtendimento;
   }
 
-  set dataAtendimento(newDataAtendimento) {
-    this.#dataAtendimento = newDataAtendimento;
+  set dataAtendimento(dataAtendimento) {
+    this.#dataAtendimento = dataAtendimento;
   }
 
-  async gravar() {
+  async salvar() {
     const pgmDAO = new PedidoGarcomMesaDAO();
-    await pgmDAO.gravar(this.toJSON());
+    await pgmDAO.salvar(this.toJSON());
   }
 
   async excluir() {
     const pgmDAO = new PedidoGarcomMesaDAO();
-    await pgmDAO.excluir(this.#idPedido);
+    await pgmDAO.excluir(this.id);
   }
 
   async atualizar() {
     const pgmDAO = new PedidoGarcomMesaDAO();
-    await pgmDAO.atualizar(this.#idPedido, this.toJSON());
+    await pgmDAO.atualizar(this.id, this.toJSON());
   }
 
   async consultar(termo) {
@@ -65,13 +68,12 @@ export default class PedidoGarcomMesa {
     return await pgmDAO.consultar(termo);
   }
 
-  // Método para converter o objeto PedidoGarcomMesa em JSON
   toJSON() {
     return {
-      idPedido: this.#idPedido,
-      idGarcom: this.#GarcomId,
-      idMesa: this.#idMesa,
-      dataAtendimento: this.#dataAtendimento
+      id: this.id,
+      garcomId: this.garcomId,
+      mesaId: this.mesaId,
+      dataAtendimento: this.dataAtendimento
     };
-  }
+}
 }

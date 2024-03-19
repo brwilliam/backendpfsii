@@ -1,4 +1,4 @@
-// import Garcom from "../Modelo/garcom.js";
+import Garcom from "../Modelo/garcom.js";
 // import Pedido from "../Modelo/pedido.js";
 import conectar from "../Persistencia/conexao.js";
 
@@ -11,7 +11,7 @@ export default class GarcomCtrl {
       const telefone = dados.telefone;
 
       if (nome && telefone) {
-        const garcom = new Garcom(nome, telefone);
+        const garcom = new Garcom(0,nome, telefone);
 
         try {
           const conexao = await conectar();
@@ -44,17 +44,19 @@ export default class GarcomCtrl {
   async atualizar(requisicao, resposta) {
     resposta.type("application/json");
     if (
-      (requisicao.method === "PUT" || requisicao.method === "PATCH") &&
+      requisicao.method === "PUT" &&
       requisicao.is("application/json")
     ) {
       const dados = requisicao.body;
       const GarcomId = dados.GarcomId;
       const nome = dados.nome;
-      const telefone = dados.telefone;
+      const telefone = dados.telefone; // Verificar se o telefone foi informado
 
       if (GarcomId && nome && telefone) {
-        const garcom = new Garcom(nome, telefone);
+        const garcom = new Garcom();
         garcom.GarcomId = GarcomId;
+        garcom.nome = nome;
+        garcom.telefone = telefone;
 
         try {
           const conexao = await conectar();
@@ -68,19 +70,18 @@ export default class GarcomCtrl {
             status: false,
             mensagem: "Erro ao atualizar o garçom: " + erro.message,
           });
-        }
+        } 
       } else {
         resposta.status(400).json({
           status: false,
           mensagem:
-            "Por favor, informe todos os dados do garçom conforme a documentação da API!",
+            "Por favor, forneça o ID, o nome e o telefone do garçom conforme a documentação da API!",
         });
       }
     } else {
       resposta.status(400).json({
         status: false,
-        mensagem:
-          "Por favor, utilize os métodos PUT ou PATCH para atualizar um garçom!",
+        mensagem: "Por favor, utilize o método PUT para atualizar um garçom!",
       });
     }
   }
@@ -129,30 +130,29 @@ export default class GarcomCtrl {
     resposta.type("application/json");
     let termo = requisicao.params.termo;
     if (!termo) {
-      termo = "";
+      termo = null;
     }
     if (requisicao.method === "GET") {
       const garcom = new Garcom();
       try {
-        const listaGarcons = await garcom.consultar(termo);
+        const listaGarcom = await garcom.consultar(termo);
         resposta.json({
           status: true,
-          listaGarcons,
+          listaGarcom,
         });
       } catch (erro) {
         resposta.json({
           status: false,
-          mensagem: "Não foi possível obter os garçons: " + erro.message,
+          mensagem: "Não foi possível obter os garçom: " + erro.message,
         });
       }
     } else {
       resposta.status(400).json({
         status: false,
-        mensagem: "Por favor, utilize o método GET para consultar garçons!",
+        mensagem: "Por favor, utilize o método GET para consultar garçom!",
       });
     }
   }
-
   async consultarPorId(requisicao, resposta) {
     resposta.type("application/json");
     const idGarcom = requisicao.params.id;

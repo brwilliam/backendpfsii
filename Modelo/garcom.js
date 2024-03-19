@@ -64,13 +64,28 @@ export default class Garcom {
   }
 
   async atualizar() {
-    
     const garcomDAO = new GarcomDAO();
     try {
-      
       await garcomDAO.atualizar(this);
     } catch (error) {
+      console.error(error.message);
+    }
+  }
 
+  async consultar() {
+    const garcomDAO = new GarcomDAO();
+    try {
+      return await garcomDAO.consultar();
+    } catch (error) {
+      console.error(error.message);
+    }
+  } 
+
+  async consultarPorId() {
+    const garcomDAO = new GarcomDAO();
+    try {
+      return await garcomDAO.consultarPorId(this);
+    } catch (error) {
       console.error(error.message);
     }
   }

@@ -1,42 +1,40 @@
 import Restaurante from "../Modelo/Restaurante.js";
 
 export default class RestauranteCtrl {
-  async gravar(requisicao, resposta) {
-    resposta.type("application/json");
-    if (requisicao.method === "POST" && requisicao.is("application/json")) {
-      const dados = requisicao.body;
-      const nomeRestaurante = dados.NomeRestaurante;
+  async gravar(request, response) {
+    response.type("application/json");
+    if (request.method === "POST" && request.is("application/json")) {
+      const { nomeRestaurante } = request.body;
 
       if (nomeRestaurante) {
         const restaurante = new Restaurante(0, nomeRestaurante);
 
         try {
           await restaurante.gravar();
-          resposta.status(200).json({
+          response.status(200).json({
             status: true,
             mensagem: "Restaurante incluído com sucesso!",
           });
         } catch (erro) {
-          resposta.status(500).json({
+          response.status(500).json({
             status: false,
             mensagem: "Erro ao registrar o restaurante: " + erro.message,
           });
         }
       } else {
-        resposta.status(400).json({
+        response.status(400).json({
           status: false,
-          mensagem:
-            "Por favor, informe todos os dados do restaurante conforme a documentação da API!",
+          mensagem: "Por favor, informe o nome do restaurante!",
         });
       }
     } else {
-      resposta.status(400).json({
+      response.status(400).json({
         status: false,
-        mensagem:
-          "Por favor, utilize o método POST para cadastrar um restaurante!",
+        mensagem: "Por favor, utilize o método POST para cadastrar um restaurante!",
       });
     }
   }
+
 
   async atualizar(requisicao, resposta) {
     resposta.type("application/json");

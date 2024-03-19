@@ -25,37 +25,34 @@ export default class GarcomDAO {
   async atualizar(garcom) {
     if (!(garcom instanceof Garcom)) {
       throw new Error('O objeto fornecido não é uma instância de Garcom.');
-    }
-
-    const sql = `UPDATE Garcom SET Nome = ?, Telefone = ? WHERE GarcomId = ?`;
-    const parametros = [
+    } const sql = `UPDATE Garcom SET Nome = ?, Telefone = ? WHERE GarcomId = ?`;
+    const valores = [
       garcom.nome,
       garcom.telefone,
       garcom.GarcomId
-    ];
-
-    try {
+    ]; try {
       const conexao = await conectar();
-      await conexao.execute(sql, parametros);
-      global.poolConexoes.releaseConnection(conexao);
-    } catch (error) {
-      throw new Error(`Erro ao atualizar garçom no banco de dados: ${error.message}`);
+      await conexao.execute(sql, valores);
+      global.poolConexoes.releaseConnection(conexao); } catch (error) {
+        throw new Error(`Erro ao atualizar garçom no banco de dados: ${error.message}`); 
+        
+      } 
     }
-  }
+     
 
-  async excluir(GarcomId) {
-    const sql = `DELETE FROM Garcom WHERE GarcomId = ?`;
-    const parametros = [GarcomId];
-
+  async excluir (garcom) {
+    if (!(garcom instanceof Garcom)) {
+      throw new Error('O objeto fornecido não é uma instância de Garcom.');
+    } const sql = `DELETE FROM Garcom WHERE GarcomId = ?`;
+    const valores = [garcom.GarcomId];
     try {
       const conexao = await conectar();
-      await conexao.execute(sql, parametros);
+      await conexao.execute(sql, valores);
       global.poolConexoes.releaseConnection(conexao);
     } catch (error) {
       throw new Error(`Erro ao excluir garçom no banco de dados: ${error.message}`);
     }
   }
-
   async consultar(termo) {
     termo = termo || '';
 
