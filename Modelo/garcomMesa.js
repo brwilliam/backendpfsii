@@ -47,5 +47,9 @@ export default class GarcomMesa {
     const dao = new GarcomMesaDAO();
     return await dao.listarRelacoes();
   }
-
+  
+  async excluir() {
+    const dao = new GarcomMesaDAO();
+    await dao.excluir(this);
+  }
 }
