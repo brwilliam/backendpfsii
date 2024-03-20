@@ -2,65 +2,50 @@ import GarcomMesaDAO from "../Persistencia/garcomMesaDAO.js";
 
 export default class GarcomMesa {
   #GarcomId;
-  #mesaID;
-  #dataAtendimento;
+  #MesaId;
 
-  constructor(GarcomId = 0, mesaID = 0, dataAtendimento = '') {
+  constructor(GarcomId = 0, MesaId = 0) {
     this.#GarcomId = GarcomId;
-    this.#mesaID = mesaID;
-    this.#dataAtendimento = dataAtendimento;
+    this.#MesaId = MesaId;
   }
 
-  get garcomID() {
+  get GarcomId() {
     return this.#GarcomId;
   }
 
-  set garcomID(novoGarcomID) {
-    this.#GarcomId = novoGarcomID;
+  set GarcomId(newId) {
+    this.#GarcomId = newId;
   }
 
-  get mesaID() {
-    return this.#mesaID;
+  get MesaId() {
+    return this.#MesaId;
   }
 
-  set mesaID(novoMesaID) {
-    this.#mesaID = novoMesaID;
+  set MesaId(newId) {
+    this.#MesaId = newId;
   }
 
-  get dataAtendimento() {
-    return this.#dataAtendimento;
-  }
-
-  set dataAtendimento(novaDataAtendimento) {
-    this.#dataAtendimento = novaDataAtendimento;
-  }
-
-  // Método para converter o objeto GarcomMesa em JSON
-  toJSON() {
-    return {
-      garcomID: this.#GarcomId,
-      mesaID: this.#mesaID,
-      dataAtendimento: this.#dataAtendimento
-    };
-  }
-
+ 
+  
   async gravar() {
-    const gmDAO = new GarcomMesaDAO();
-    await gmDAO.gravar(this);
+    const mesaDAO = new GarcomMesaDAO();
+    const garcomMesa = { GarcomId: this.#GarcomId, MesaId: this.#MesaId };
+    await mesaDAO.gravar(garcomMesa);
+}
+
+  async consultarGarconsDaMesa(GarcomId) {
+    const mesaDAO = new GarcomMesaDAO();
+    return await mesaDAO.consultarGarconsDaMesa(GarcomId);
   }
 
-  async excluir() {
-    const gmDAO = new GarcomMesaDAO();
-    await gmDAO.excluir(this);
+  async consultarMesasDoGarcom(MesaId) {
+    const mesaDAO = new GarcomMesaDAO();
+    return await mesaDAO.consultarMesasDoGarcom(MesaId);
   }
 
-  async atualizar() {
-    const gmDAO = new GarcomMesaDAO();
-    await gmDAO.atualizar(this);
+  async listarRelacoes() {
+    const dao = new GarcomMesaDAO();
+    return await dao.listarRelacoes();
   }
 
-  async consultar(termo) {
-    const gmDAO = new GarcomMesaDAO();
-    return await gmDAO.consultar(termo);
-  }
 }

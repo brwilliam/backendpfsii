@@ -1,5 +1,4 @@
 import Garcom from "../Modelo/garcom.js";
-// import Pedido from "../Modelo/pedido.js";
 import conectar from "../Persistencia/conexao.js";
 
 export default class GarcomCtrl {
@@ -192,4 +191,5 @@ export default class GarcomCtrl {
       });
     }
   }
+  
 }

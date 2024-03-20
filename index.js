@@ -8,6 +8,7 @@ import rotaMesa from "./Rotas/rotaMesa.js";
 import dotenv from "dotenv";
 import session from "express-session";
 import { verificarAcesso } from "./Seguranca/Autenticacao.js";
+import rotaGarcomMesa from "./Rotas/rotaGarcomMesa.js";
 
 const host = "0.0.0.0";
 const porta = "3000";
@@ -37,6 +38,7 @@ app.use("/restaurante", rotaRestaurante); // Use a rota do restaurante
 app.use("/pedido", rotaPedido); // Use a rota do pedido
 app.use("/garcom", rotaGarcom);
 app.use("/mesa", rotaMesa);
+app.use("/garcom-mesa", rotaGarcomMesa)
 
 app.listen(porta, host, () => {
   console.log(`Servidor escutando na porta ${host}:${porta}.`);

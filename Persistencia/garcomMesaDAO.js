@@ -2,25 +2,25 @@ import conectar from "./conexao.js";
 
 export default class GarcomMesaDAO {
   async gravar(garcomMesa) {
-    const sql = `INSERT INTO GarcomMesa (GarcomId, MesaID, DataAtendimento) VALUES (?, ?, ?)`;
-    const parametros = [
-      garcomMesa.GarcomId,
-      garcomMesa.mesaID,
-      garcomMesa.dataAtendimento,
-    ];
+    if (!garcomMesa || garcomMesa.GarcomId === undefined || garcomMesa.MesaId === undefined) {
+        throw new Error("GarcomId e/ou MesaId não estão definidos.");
+    }
+
+    const sql = `INSERT INTO GarcomMesa (GarcomId, MesaId) VALUES (?, ?)`;
+    const parametros = [garcomMesa.GarcomId, garcomMesa.MesaId];
 
     try {
-      const conexao = await conectar();
-      await conexao.execute(sql, parametros);
-      global.poolConexoes.releaseConnection(conexao);
+        const conexao = await conectar();
+        await conexao.execute(sql, parametros);
+        global.poolConexoes.releaseConnection(conexao);
     } catch (error) {
-      throw new Error(`Erro ao adicionar relação garçom-mesa no banco de dados: ${error.message}`);
+        throw new Error(`Erro ao adicionar relação garçom-mesa no banco de dados: ${error.message}`);
     }
-  }
+}
 
   async excluir(garcomMesa) {
-    const sql = `DELETE FROM GarcomMesa WHERE GarcomId = ? AND MesaID = ?`;
-    const parametros = [garcomMesa.GarcomId, garcomMesa.mesaID];
+    const sql = `DELETE FROM GarcomMesa WHERE GarcomId = ? AND MesaId = ?`;
+    const parametros = [garcomMesa.GarcomId, garcomMesa.MesaId];
 
     try {
       const conexao = await conectar();
@@ -32,7 +32,7 @@ export default class GarcomMesaDAO {
   }
 
   async consultarMesasDoGarcom(GarcomId) {
-    const sql = `SELECT * FROM Garcom_Mesa WHERE GarcomId = ?`;
+    const sql = `SELECT * FROM GarcomMesa WHERE GarcomId = ?`;
     const parametros = [GarcomId];
 
     try {
@@ -45,9 +45,9 @@ export default class GarcomMesaDAO {
     }
   }
 
-  async consultarGarconsDaMesa(mesaID) {
-    const sql = `SELECT * FROM Garcom_Mesa WHERE MesaID = ?`;
-    const parametros = [mesaID];
+  async consultarGarconsDaMesa(MesaId) {
+    const sql = `SELECT * FROM GarcomMesa WHERE MesaId = ?`;
+    const parametros = [MesaId];
 
     try {
       const conexao = await conectar();
@@ -58,4 +58,17 @@ export default class GarcomMesaDAO {
       throw new Error(`Erro ao consultar garçons da mesa no banco de dados: ${error.message}`);
     }
   }
+  async listarRelacoes() {
+    const query = 'SELECT * FROM GarcomMesa';
+
+    try {
+      const connection = await conectar();
+      const [results] = await connection.execute(query);
+      global.poolConexoes.releaseConnection(connection);
+      return results;
+    } catch (error) {
+      throw new Error('Erro ao listar todas as associações garçom-mesa');
+    }
+  }
+
 }
