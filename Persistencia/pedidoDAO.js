@@ -11,7 +11,7 @@ export default class PedidoDAO {
         const parametros = [
             pedido.DataPedido,
             pedido.ValorTotal,
-            pedido.Restaurante.RestauranteID,
+            pedido.RestauranteID.RestauranteID,
             pedido.GarcomMesa.GarcomId,
             pedido.GarcomMesa.MesaId
         ];
@@ -70,33 +70,45 @@ export default class PedidoDAO {
 
     async consultar(termo) {
         termo = termo || '';
-
+    
         const conexao = await conectar();
-
+    
         try {
-            const sql = `SELECT p.PedidoID, DATE_FORMAT(p.DataPedido, '%Y-%m-%d') AS DataPedido, p.ValorTotal, r.RestauranteID, r.NomeRestaurante, pgm.GarcomId, pgm.MesaId
-                FROM Pedido p
-                INNER JOIN Restaurante r ON p.RestauranteID = r.RestauranteID
-                INNER JOIN PedidoGarcomMesa pgm ON p.PedidoID = pgm.PedidoID
-                WHERE p.DataPedido LIKE ? OR p.PedidoID = ?
-                ORDER BY p.DataPedido`;
-
+            const sql = `SELECT 
+            pedido.PedidoID, 
+            DATE_FORMAT(pedido.DataPedido, '%Y-%m-%d') AS DataPedidoFormatada, 
+            pedido.ValorTotal, 
+            restaurante.RestauranteID, 
+            restaurante.NomeRestaurante, 
+            garcomMesa.GarcomId, 
+            garcomMesa.MesaId
+        FROM 
+            Pedido pedido
+        INNER JOIN 
+            Restaurante restaurante ON pedido.RestauranteID = restaurante.RestauranteID
+        INNER JOIN 
+            GarcomMesa garcomMesa ON pedido.GarcomId = garcomMesa.GarcomId AND pedido.MesaId = garcomMesa.MesaId
+        WHERE 
+            pedido.DataPedido LIKE ? OR pedido.PedidoID = ?
+        ORDER BY 
+            pedido.DataPedido;`;
+    
             const parametros = [`%${termo}%`, termo];
-
+    
             const [registros] = await conexao.execute(sql, parametros);
-
+    
             const listaPedidos = registros.map(registro => {
                 const restaurante = { RestauranteID: registro.RestauranteID, NomeRestaurante: registro.NomeRestaurante };
                 const garcomMesa = { GarcomId: registro.GarcomId, MesaId: registro.MesaId };
                 return {
                     PedidoID: registro.PedidoID,
-                    DataPedido: registro.DataPedido,
+                    DataPedido: registro.DataPedidoFormatada,
                     ValorTotal: registro.ValorTotal,
                     Restaurante: restaurante,
                     GarcomMesa: garcomMesa
                 };
             });
-
+    
             return listaPedidos;
         } catch (error) {
             throw new Error(`Erro ao consultar pedidos no banco de dados: ${error.message}`);
@@ -104,4 +116,6 @@ export default class PedidoDAO {
             global.poolConexoes.releaseConnection(conexao);
         }
     }
+    
+    
 }

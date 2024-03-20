@@ -4,87 +4,84 @@ export default class Pedido {
   #IDPedido;
   #DataPedido;
   #ValorTotal;
-  #Restaurante;
-  #Garcom;
-  #Mesa;
+  #RestauranteID;
+  #GarcomId;
+  #MesaId;
 
   constructor(
     IDPedido = 0,
     DataPedido = "",
     ValorTotal = 0,
-    Restaurante = {} ,
-    Garcom = {},
-    Mesa = {}
+    RestauranteID = 0,
+    GarcomId = 0,
+    MesaId = 0
   ) {
     this.#IDPedido = IDPedido;
     this.#DataPedido = DataPedido;
     this.#ValorTotal = ValorTotal;
-    this.#Restaurante = Restaurante;
-    this.#Garcom = Garcom;
-    this.#Mesa = Mesa;
+    this.#RestauranteID = RestauranteID;
+    this.#GarcomId = GarcomId;
+    this.#MesaId = MesaId;
   }
 
-  // Getters e setters 
-   // Getters
- get IDPedido() {
-  return this.#IDPedido;
-}
+  // Getters e setters
+  get IDPedido() {
+    return this.#IDPedido;
+  }
 
-get DataPedido() {
-  return this.#DataPedido;
-}
+  get DataPedido() {
+    return this.#DataPedido;
+  }
 
-get ValorTotal() {
-  return this.#ValorTotal;
-}
+  get ValorTotal() {
+    return this.#ValorTotal;
+  }
 
-get Restaurante() {
-  return this.#Restaurante;
-}
+  get RestauranteID() {
+    return this.#RestauranteID;
+  }
 
-get Garcom() {
-  return this.#Garcom;
-}
+  get GarcomId() {
+    return this.#GarcomId;
+  }
 
-get Mesa() {
-  return this.#Mesa;
-}
+  get MesaId() {
+    return this.#MesaId;
+  }
 
-// Setters
-set IDPedido(value) {
-  this.#IDPedido = value;
-}
+  set IDPedido(value) {
+    this.#IDPedido = value;
+  }
 
-set DataPedido(value) {
-  this.#DataPedido = value;
-}
+  set DataPedido(value) {
+    this.#DataPedido = value;
+  }
 
-set ValorTotal(value) {
-  this.#ValorTotal = value;
-}
+  set ValorTotal(value) {
+    this.#ValorTotal = value;
+  }
 
-set Restaurante(value) {
-  this.#Restaurante = value;
-}
+  set RestauranteID(value) {
+    this.#RestauranteID = value;
+  }
 
-set Garcom(value) {
-  this.#Garcom = value;
-}
+  set GarcomId(value) {
+    this.#GarcomId = value;
+  }
 
-set Mesa(value) {
-  this.#Mesa = value;
-}
+  set MesaId(value) {
+    this.#MesaId = value;
+  }
 
-
-  // Método toJSON atualizado 
+  // Método toJSON
   toJSON() {
     return {
       IDPedido: this.#IDPedido,
       DataPedido: this.#DataPedido,
       ValorTotal: this.#ValorTotal,
-      Restaurante: this.#Restaurante, 
-      Garcom: this.#Garcom,
-      Mesa: this.#Mesa,
+      RestauranteID: this.#RestauranteID,
+      GarcomId: this.#GarcomId,
+      MesaId: this.#MesaId
     };
   }
 

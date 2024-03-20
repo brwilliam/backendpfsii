@@ -1,4 +1,5 @@
-import Pedido from "../Modelo/pedido.js";
+import  Pedido  from "../Modelo/pedido.js";
+import  PedidoDAO  from "../Persistencia/pedidoDAO.js";
 
 export default class PedidoCtrl {
   async gravar(requisicao, resposta) {
@@ -11,8 +12,8 @@ export default class PedidoCtrl {
       const garcomMesa = dados.GarcomMesa;
 
       if (dataPedido && valorTotal > 0 && restauranteID && garcomMesa) {
-        const garcomId = garcomMesa.GarcomId;
-        const mesaId = garcomMesa.MesaId;
+        const garcomId = dados.GarcomMesa.GarcomId;
+        const mesaId = dados.GarcomMesa.MesaId;
 
         const pedido = new Pedido(0, dataPedido, valorTotal, restauranteID, garcomId, mesaId);
 
@@ -44,7 +45,6 @@ export default class PedidoCtrl {
     }
   }
 
-
   async atualizar(requisicao, resposta) {
     resposta.type("application/json");
     if (
@@ -56,11 +56,11 @@ export default class PedidoCtrl {
       const dataPedido = dados.DataPedido;
       const restaurante = dados.Restaurante;
       const valorTotal = dados.ValorTotal;
-      const garcomMesa = dados.garcomMesa;
+      const garcomMesa = dados.GarcomMesa;
 
       if (idPedido && dataPedido && valorTotal > 0 && garcomMesa && restaurante) {
-        const garcomID = garcomMesa.GarcomId;
-        const mesaID = garcomMesa.MesaId;
+        const garcomID = dados.GarcomMesa.GarcomId;
+        const mesaID = dados.GarcomMesa.MesaId;
 
         const pedido = new Pedido(
           idPedido,
@@ -162,3 +162,4 @@ export default class PedidoCtrl {
     }
   }
 }
+
