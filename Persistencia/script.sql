@@ -28,15 +28,20 @@ CREATE TABLE GarcomMesa (
 
 -- Criação da tabela Pedido
 CREATE TABLE Pedido (
-    PedidoID INT AUTO_INCREMENT PRIMARY KEY,
-    DataPedido DATE NOT NULL,
-    ValorTotal DECIMAL(15, 2) NOT NULL,
-    RestauranteID INT NOT NULL,
-    GarcomId INT NOT NULL,
-    MesaId INT NOT NULL,
-    FOREIGN KEY (RestauranteID) REFERENCES Restaurante(RestauranteID),
-    FOREIGN KEY (GarcomId, MesaId) REFERENCES GarcomMesa(GarcomId, MesaId)
+    PedidoId INT AUTO_INCREMENT PRIMARY KEY,
+    dataPedido DATETIME NOT NULL,
+    idRestaurante INT,
+    valorTotal DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (idRestaurante) REFERENCES Restaurante(RestauranteID)
 );
 
-
-
+-- Criação da tabela de associação PedidoGarcomMesa
+CREATE TABLE PedidoGarcomMesa (
+    PedidoId INT,
+    GarcomId INT,
+    MesaId INT,
+    FOREIGN KEY (PedidoId) REFERENCES Pedido(PedidoId),
+    FOREIGN KEY (GarcomId) REFERENCES Garcom(GarcomId),
+    FOREIGN KEY (MesaId) REFERENCES Mesa(MesaId),
+    PRIMARY KEY (PedidoId, GarcomId, MesaId)
+);

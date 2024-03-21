@@ -5,11 +5,8 @@ const pedidoCtrl = new PedidoCtrl();
 const rotaPedido = new Router();
 
 rotaPedido
-  .get("/", pedidoCtrl.consultar)
-  .get("/:termo", pedidoCtrl.consultar)
-  .post("/", pedidoCtrl.gravar)
-  .patch("/", pedidoCtrl.atualizar)
-  .put("/", pedidoCtrl.atualizar)
-  .delete("/", pedidoCtrl.excluir);
+  .post("/", pedidoCtrl.gravar) // Cria um novo pedido
+  .get("/todos", pedidoCtrl.listarTodos) // Lista todos os pedidos
+  .delete("/", pedidoCtrl.excluir); // Exclui um pedido específico
 
 export default rotaPedido;

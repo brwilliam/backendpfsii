@@ -1,121 +1,60 @@
-import Pedido from "../Modelo/pedido.js";
 import conectar from "./conexao.js";
 
 export default class PedidoDAO {
     async gravar(pedido) {
-        if (!(pedido instanceof Pedido)) {
-            throw new Error('O objeto fornecido não é uma instância de Pedido.');
+        if (!pedido || pedido.DataPedido === undefined || pedido.IdRestaurante === undefined) {
+            throw new Error("DataPedido e/ou IdRestaurante não estão definidos.");
         }
 
-        const sql = `INSERT INTO Pedido (DataPedido, ValorTotal, RestauranteID, GarcomId, MesaId) VALUES (?, ?, ?, ?, ?)`;
-        const parametros = [
-            pedido.DataPedido,
-            pedido.ValorTotal,
-            pedido.RestauranteID.RestauranteID,
-            pedido.GarcomMesa.GarcomId,
-            pedido.GarcomMesa.MesaId
-        ];
-
-        try {
-            const conexao = await conectar();
-            const resultado = await conexao.execute(sql, parametros);
-            pedido.PedidoID = resultado[0].insertId;
-            global.poolConexoes.releaseConnection(conexao);
-        } catch (error) {
-          await conexao.rollback();
-          throw error;
-        }
-    }
-
-    async atualizar(pedido) {
-        if (!(pedido instanceof Pedido)) {
-            throw new Error('O objeto fornecido não é uma instância de Pedido.');
-        }
-
-        const sql = `UPDATE Pedido SET DataPedido = ?, ValorTotal = ?, RestauranteID = ?, GarcomId = ?, MesaId = ? WHERE PedidoID = ?`;
-        const parametros = [
-            pedido.DataPedido,
-            pedido.ValorTotal,
-            pedido.Restaurante.RestauranteID,
-            pedido.GarcomMesa.GarcomId,
-            pedido.GarcomMesa.MesaId,
-            pedido.PedidoID
-        ];
+        const sql = `INSERT INTO Pedido ( DataPedido, IdRestaurante) VALUES (?, ?)`;
+        const parametros = [ pedido.DataPedido, pedido.IdRestaurante];
 
         try {
             const conexao = await conectar();
             await conexao.execute(sql, parametros);
             global.poolConexoes.releaseConnection(conexao);
         } catch (error) {
-            throw new Error(`Erro ao atualizar pedido no banco de dados: ${error.message}`);
+            throw new Error(`Erro ao adicionar pedido no banco de dados: ${error.message}`);
         }
     }
 
     async excluir(pedido) {
-        if (!(pedido instanceof Pedido)) {
-            throw new Error('O objeto fornecido não é uma instância de Pedido.');
-        }
-
-        const sql = `DELETE FROM Pedido WHERE PedidoID = ?`;
-        const parametros = [pedido.PedidoID];
+        const sql = `DELETE FROM Pedido WHERE PedidoId = ?`;
+        const parametros = [pedido.PedidoId];
 
         try {
             const conexao = await conectar();
             await conexao.execute(sql, parametros);
             global.poolConexoes.releaseConnection(conexao);
         } catch (error) {
-            throw new Error(`Erro ao excluir pedido no banco de dados: ${error.message}`);
+            throw new Error(`Erro ao remover pedido do banco de dados: ${error.message}`);
         }
     }
 
-    async consultar(termo) {
-        termo = termo || '';
-    
-        const conexao = await conectar();
-    
+    async listarPedidos() {
+        const sql = 'SELECT * FROM Pedido';
+
         try {
-            const sql = `SELECT 
-            pedido.PedidoID, 
-            DATE_FORMAT(pedido.DataPedido, '%Y-%m-%d') AS DataPedidoFormatada, 
-            pedido.ValorTotal, 
-            restaurante.RestauranteID, 
-            restaurante.NomeRestaurante, 
-            garcomMesa.GarcomId, 
-            garcomMesa.MesaId
-        FROM 
-            Pedido pedido
-        INNER JOIN 
-            Restaurante restaurante ON pedido.RestauranteID = restaurante.RestauranteID
-        INNER JOIN 
-            GarcomMesa garcomMesa ON pedido.GarcomId = garcomMesa.GarcomId AND pedido.MesaId = garcomMesa.MesaId
-        WHERE 
-            pedido.DataPedido LIKE ? OR pedido.PedidoID = ?
-        ORDER BY 
-            pedido.DataPedido;`;
-    
-            const parametros = [`%${termo}%`, termo];
-    
-            const [registros] = await conexao.execute(sql, parametros);
-    
-            const listaPedidos = registros.map(registro => {
-                const restaurante = { RestauranteID: registro.RestauranteID, NomeRestaurante: registro.NomeRestaurante };
-                const garcomMesa = { GarcomId: registro.GarcomId, MesaId: registro.MesaId };
-                return {
-                    PedidoID: registro.PedidoID,
-                    DataPedido: registro.DataPedidoFormatada,
-                    ValorTotal: registro.ValorTotal,
-                    Restaurante: restaurante,
-                    GarcomMesa: garcomMesa
-                };
-            });
-    
-            return listaPedidos;
-        } catch (error) {
-            throw new Error(`Erro ao consultar pedidos no banco de dados: ${error.message}`);
-        } finally {
+            const conexao = await conectar();
+            const [resultados] = await conexao.execute(sql);
             global.poolConexoes.releaseConnection(conexao);
+            return resultados;
+        } catch (error) {
+            throw new Error('Erro ao listar pedidos.');
         }
     }
-    
-    
+
+    async consultarPedidosDoRestaurante(IdRestaurante) {
+        const sql = `SELECT * FROM Pedido WHERE IdRestaurante = ?`;
+        const parametros = [IdRestaurante];
+
+        try {
+            const conexao = await conectar();
+            const [resultados] = await conexao.execute(sql, parametros);
+            global.poolConexoes.releaseConnection(conexao);
+            return resultados;
+        } catch (error) {
+            throw new Error(`Erro ao consultar pedidos do restaurante no banco de dados: ${error.message}`);
+        }
+    }
 }

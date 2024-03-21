@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import session from "express-session";
 import { verificarAcesso } from "./Seguranca/Autenticacao.js";
 import rotaGarcomMesa from "./Rotas/rotaGarcomMesa.js";
+import rotaPedidoGarcomMesa from "./Rotas/rotaPedidoGarcomMesa.js";
 
 const host = "0.0.0.0";
 const porta = "3000";
@@ -39,6 +40,7 @@ app.use("/pedido", rotaPedido); // Use a rota do pedido
 app.use("/garcom", rotaGarcom);
 app.use("/mesa", rotaMesa);
 app.use("/garcom-mesa", rotaGarcomMesa)
+app.use("/pedido-garcom-mesa", rotaPedidoGarcomMesa);
 
 app.listen(porta, host, () => {
   console.log(`Servidor escutando na porta ${host}:${porta}.`);
