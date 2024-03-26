@@ -31,7 +31,7 @@ export default class PedidoDAO {
         }
     }
 
-    async listarPedidos() {
+    async consultar() {
         const sql = 'SELECT * FROM Pedido';
 
         try {

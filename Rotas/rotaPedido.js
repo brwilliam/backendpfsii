@@ -6,7 +6,7 @@ const rotaPedido = new Router();
 
 rotaPedido
   .post("/", pedidoCtrl.gravar) // Cria um novo pedido
-  .get("/todos", pedidoCtrl.listarTodos) // Lista todos os pedidos
+  .get("/", pedidoCtrl.consultar) // Lista todos os pedidos
   .delete("/", pedidoCtrl.excluir); // Exclui um pedido específico
 
 export default rotaPedido;

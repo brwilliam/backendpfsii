@@ -33,15 +33,17 @@ CREATE TABLE Pedido (
     idRestaurante INT,
     valorTotal DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (idRestaurante) REFERENCES Restaurante(RestauranteID)
+    FOREIGN KEY (GarcomId) REFERENCES Garcom(GarcomId) 
+    FOREIGN KEY (MesaId) REFERENCES Mesa(MesaId)
 );
 
--- Criação da tabela de associação PedidoGarcomMesa
-CREATE TABLE PedidoGarcomMesa (
-    PedidoId INT,
-    GarcomId INT,
-    MesaId INT,
-    FOREIGN KEY (PedidoId) REFERENCES Pedido(PedidoId),
-    FOREIGN KEY (GarcomId) REFERENCES Garcom(GarcomId),
-    FOREIGN KEY (MesaId) REFERENCES Mesa(MesaId),
-    PRIMARY KEY (PedidoId, GarcomId, MesaId)
-);
+-- -- Criação da tabela de associação PedidoGarcomMesa
+-- CREATE TABLE PedidoGarcomMesa (
+--     PedidoId INT,
+--     GarcomId INT,
+--     MesaId INT,
+--     FOREIGN KEY (PedidoId) REFERENCES Pedido(PedidoId),
+--     FOREIGN KEY (GarcomId) REFERENCES Garcom(GarcomId),
+--     FOREIGN KEY (MesaId) REFERENCES Mesa(MesaId),
+--     PRIMARY KEY (PedidoId, GarcomId, MesaId)
+-- );

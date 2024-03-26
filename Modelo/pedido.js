@@ -1,16 +1,22 @@
+// Pedido.js
 import PedidoDAO from "../Persistencia/pedidoDAO.js";
 
 export default class Pedido {
   #PedidoId;
   #DataPedido;
   #IdRestaurante;
+  #ValorTotal;
+  #GarcomMesa;
 
-  constructor(PedidoId = 0, DataPedido = new Date(), IdRestaurante = 0) {
+  constructor(PedidoId = 0, DataPedido = new Date(), IdRestaurante = 0, ValorTotal = 0, GarcomMesa = null) {
     this.#PedidoId = PedidoId;
     this.#DataPedido = DataPedido;
     this.#IdRestaurante = IdRestaurante;
+    this.#ValorTotal = ValorTotal;
+    this.#GarcomMesa = GarcomMesa;
   }
 
+  // Getters e Setters
   get PedidoId() {
     return this.#PedidoId;
   }
@@ -35,24 +41,44 @@ export default class Pedido {
     this.#IdRestaurante = newId;
   }
 
+  get ValorTotal() {
+    return this.#ValorTotal;
+  }
+
+  set ValorTotal(newValue) {
+    this.#ValorTotal = newValue;
+  }
+
+  get GarcomMesa() {
+    return this.#GarcomMesa;
+  }
+
+  set GarcomMesa(newGarcomMesa) {
+    this.#GarcomMesa = newGarcomMesa;
+  }
+
   async gravar() {
     const pedidoDAO = new PedidoDAO();
-    const pedido = { PedidoId: this.#PedidoId, DataPedido: this.#DataPedido, IdRestaurante: this.#IdRestaurante };
+    const pedido = {
+      PedidoId: this.#PedidoId,
+      dataPedido: this.#DataPedido,
+      idRestaurante: this.#IdRestaurante,
+      valorTotal: this.#ValorTotal,
+      GarcomMesa: {
+        GarcomId: this.#GarcomMesa?.GarcomId,
+        MesaId: this.#GarcomMesa?.MesaId
+      }
+    };
     await pedidoDAO.gravar(pedido);
   }
 
-  async consultarPedidosDoRestaurante(IdRestaurante) {
+  async consultar() {
     const pedidoDAO = new PedidoDAO();
-    return await pedidoDAO.consultarPedidosDoRestaurante(IdRestaurante);
-  }
-
-  async listarPedidos() {
-    const pedidoDAO = new PedidoDAO();
-    return await pedidoDAO.listarPedidos();
+    return await pedidoDAO.consultar();
   }
 
   async excluir() {
     const pedidoDAO = new PedidoDAO();
-    await pedidoDAO.excluir(this);
+    await pedidoDAO.excluir(this.#PedidoId);
   }
 }
